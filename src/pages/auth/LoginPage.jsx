@@ -3,7 +3,7 @@ import '../css/LoginPage.css'
 
 const Login = () => {
   const handleLogin = (role) => {
-    window.location.href = `http://localhost:5001/auth/google?role=${role}`
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google?role=${role}`
   }
 
   return (
