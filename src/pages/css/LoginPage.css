@@ -1,0 +1,140 @@
+/* ── Header ─────────────────────────────────────────── */
+.login-header {
+  background-color: #8B0000;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.login-header-logo {
+  height: 60px;
+  width: auto;
+}
+
+.login-header-title {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+
+.login-header-subtitle {
+  color: #ffcccc;
+  font-size: 0.85rem;
+}
+
+.login-page {
+  min-height: 100vh;
+  position: relative;
+  background: url('../../assets/ceat-bldg.png') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header,
+.login-content {
+  position: relative;
+  z-index: 1;
+}
+
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55); /* adjust darkness here */
+  z-index: 0;
+}
+
+/* ── Content Area ────────────────────────────────────── */
+.login-content {
+  min-height: calc(100vh - 101px);
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.login-card {
+  width: 420px;
+  padding: 40px;
+  text-align: center;
+}
+
+.login-card-subtitle {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+.login-role-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn-login-primary {
+  background-color: #8B0000;
+  border-color: #8B0000;
+  color: #ffffff;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+}
+
+.btn-login-primary:hover {
+  background-color: #6b0000;
+  border-color: #6b0000;
+  color: #ffffff;
+}
+
+.btn-login-outline {
+  background-color: #ffffff !important;
+  border: 2px solid #8B0000 !important;
+  color: #8B0000 !important;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+}
+
+.btn-login-outline:hover {
+  background-color: #8B0000 !important;
+  color: #ffffff !important;
+}
+
+.login-footer-text {
+  color: #6c757d;
+  font-size: 0.7rem;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 576px) {
+  .login-header {
+    padding: 16px 20px;
+    gap: 12px;
+  }
+
+  .login-header-logo {
+    height: 45px;
+  }
+
+  .login-header-title {
+    font-size: 1rem;
+  }
+
+  .login-header-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .login-card {
+    width: 100%;
+    margin: 0 16px;
+    padding: 28px 20px;
+  }
+}

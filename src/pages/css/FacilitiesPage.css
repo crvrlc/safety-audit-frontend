@@ -1,0 +1,455 @@
+/* ── Page ────────────────────────────────────── */
+.facilities-page {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────── */
+.facilities-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.facilities-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.facilities-subtitle {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 4px 0 0;
+}
+
+.btn-add-facility {
+  background-color: #1a6fba !important;
+  border-color: #1a6fba !important;
+  font-size: 0.875rem;
+  padding: 8px 18px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.btn-add-facility:hover {
+  background-color: #155a99 !important;
+  border-color: #155a99 !important;
+}
+
+/* ── Stats ───────────────────────────────────── */
+.facilities-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.2;
+}
+
+/* ── Search ──────────────────────────────────── */
+.facilities-search { margin-bottom: 1rem; }
+
+.search-input {
+  font-size: 0.875rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  padding: 9px 14px;
+}
+.search-input:focus {
+  border-color: #1a6fba;
+  box-shadow: 0 0 0 3px rgba(26,111,186,0.12);
+}
+
+/* ── Table ───────────────────────────────────── */
+.facilities-table-wrap {
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.facilities-table {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.facilities-table thead th {
+  background: #f8f9fa;
+  color: #6c757d;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #dee2e6;
+  padding: 12px 16px;
+}
+
+.facilities-table tbody td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-color: #f0f0f0;
+}
+
+.td-name {
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.td-muted {
+  color: #adb5bd;
+  font-size: 0.85rem;
+}
+
+.td-manager-name {
+  font-weight: 500;
+  color: #1a1a2e;
+  font-size: 0.875rem;
+}
+
+.td-manager-email {
+  font-size: 0.78rem;
+  color: #6c757d;
+  margin-top: 2px;
+}
+
+/* ── Tags ────────────────────────────────────── */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.tag-unit {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.tag-office {
+  background: #e8f0fe;
+  color: #1a6fba;
+}
+
+/* ── Table actions ───────────────────────────── */
+.table-actions { display: flex; gap: 6px; }
+
+.btn-action {
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-action.edit   { color: #1a6fba; border-color: #1a6fba; }
+.btn-action.edit:hover { background: #1a6fba; color: #fff; }
+
+.btn-action.delete   { color: #dc3545; border-color: #dc3545; }
+.btn-action.delete:hover { background: #dc3545; color: #fff; }
+
+/* ── Loading / empty ─────────────────────────── */
+.facilities-loading,
+.facilities-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ── Form modal ──────────────────────────────── */
+.required { color: #dc3545; }
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ── Facility Modal ───────────────────────────── */
+
+.facility-modal .modal-content {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Header */
+.facility-modal .modal-header {
+  background: #111827;
+  color: #fff;
+  border-bottom: none;
+  padding: 16px 20px;
+}
+
+.facility-modal .modal-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Body */
+.facility-modal .modal-body {
+  background: #fafafa;
+  padding: 20px;
+}
+
+/* Footer */
+.facility-modal .modal-footer {
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 14px 20px;
+}
+
+/* ── Inputs ───────────────────────────── */
+
+.facility-modal .form-control {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.facility-modal .form-control:focus {
+  border-color: #1565c0;
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.15);
+}
+
+.facility-modal .form-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #222;
+}
+
+.required {
+  color: #c62828;
+}
+
+/* helper text */
+.facility-modal .text-muted {
+  font-size: 12px;
+}
+
+/* ── 2-column row ───────────────────────────── */
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ── Offices builder ───────────────────────────── */
+
+.offices-builder {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.offices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.office-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f9fafb;
+  border: 1px solid #eee;
+}
+
+.office-row-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+}
+
+.office-row-remove {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: #b91c1c;
+  cursor: pointer;
+}
+
+/* Add office input row */
+.add-office-row {
+  display: flex;
+  gap: 8px;
+}
+
+.add-office-row .form-control {
+  flex: 1;
+}
+
+.btn-add-office {
+  background: #1565c0;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-add-office:hover {
+  background: #0d47a1;
+}
+
+/* ── Buttons ───────────────────────────── */
+
+.btn-save {
+  background: #2e7d32;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+
+.btn-save:hover {
+  background: #1b5e20;
+}
+
+/* Cancel button (Bootstrap override) */
+.modal-footer .btn-secondary {
+  border-radius: 10px;
+}
+
+/* ── Offices builder ─────────────────────────── */
+.offices-builder {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.no-offices {
+  font-size: 0.8rem;
+  color: #adb5bd;
+  margin-bottom: 10px;
+}
+
+.offices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.office-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+}
+
+.office-row-name {
+  font-weight: 500;
+  color: #1a1a2e;
+  flex: 1;
+}
+
+.office-row-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #adb5bd;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+.office-row-remove:hover { color: #dc3545; }
+
+.add-office-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-add-office {
+  background: #f0f4ff;
+  border: 1px solid #c5d5f5;
+  color: #1a6fba;
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-add-office:hover { background: #dce8ff; }
+
+/* ── Save button ─────────────────────────────── */
+.btn-save {
+  background-color: #1a6fba !important;
+  border-color: #1a6fba !important;
+}
+.btn-save:hover {
+  background-color: #155a99 !important;
+  border-color: #155a99 !important;
+}
+
+/* ── Delete modal ────────────────────────────── */
+.delete-modal-body { text-align: center; padding: 1.5rem; }
+.delete-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.delete-facility-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; color: #1a1a2e; }
+.delete-warning { font-size: 0.875rem; color: #6c757d; margin: 0; }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 768px) {
+  .facilities-page { padding: 1rem; }
+  .facilities-stats { grid-template-columns: 1fr; }
+  .form-row-2 { grid-template-columns: 1fr; }
+}

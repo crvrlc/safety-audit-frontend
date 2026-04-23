@@ -1,0 +1,412 @@
+/* ── AdminChecklists.css ────────────────────────────── */
+
+.admin-checklists {
+  max-width: 1200px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+/* Section cards grid */
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.section-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.section-desc {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.55;
+  flex: 1;
+  margin-bottom: 14px;
+}
+
+.section-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-count {
+  font-size: 12px;
+  color: #888;
+  background: #f5f5f5;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+/* Edit page */
+.edit-page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.back-btn:hover {
+  border-color: #8B0000;
+  color: #8B0000;
+}
+
+.section-subtitle {
+  font-size: 12px;
+  color: #888;
+  margin-top: 3px;
+}
+
+/* Edit card */
+.edit-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+
+.edit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.edit-card-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* Item list */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.empty-items {
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fafafa;
+  border: 1px solid #efefef;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.item-reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.reorder-btn {
+  background: none;
+  border: none;
+  font-size: 10px;
+  color: #ccc;
+  cursor: pointer;
+  padding: 1px 3px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.reorder-btn:hover:not(:disabled) {
+  color: #8B0000;
+}
+
+.reorder-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.item-num {
+  font-size: 12px;
+  color: #bbb;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.item-text {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}
+
+.item-edit-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #8B0000;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+}
+
+.item-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Add item row */
+.add-item-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.add-item-input {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s, border-style 0.2s;
+}
+
+.add-item-input:focus {
+  border-color: #8B0000;
+  border-style: solid;
+}
+
+/* Edit actions footer */
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Form groups (for AddSection) */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #8B0000;
+}
+
+.form-error {
+  background: #fce4ec;
+  color: #c62828;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Small buttons */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.btn-edit             { background: #e3f2fd; color: #1565c0; }
+.btn-edit:hover       { background: #bbdefb; }
+.btn-deactivate       { background: #fce4ec; color: #c62828; }
+.btn-deactivate:hover { background: #f8bbd9; }
+.btn-save-inline       { background: #e8f5e9; color: #2e7d32; }
+.btn-save-inline:hover { background: #c8e6c9; }
+.btn-cancel-inline     { background: #f5f5f5; color: #555; }
+.btn-cancel-inline:hover { background: #eeeeee; }
+
+/* Shared buttons */
+.btn-primary {
+  background: #8B0000;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) { background: #6d0000; }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  background: #ffffff;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover { border-color: #8B0000; color: #8B0000; }
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  gap: 12px;
+}
+
+.empty-icon  { font-size: 48px; }
+.empty-title { font-size: 16px; font-weight: 600; color: #888; }
+.empty-desc  { font-size: 13px; color: #aaa; }
+
+/* Spinner */
+.admin-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #8B0000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 18px;
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.section-desc-input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 14px;
+  resize: none;
+  margin-top: 8px;
+}
+
+.section-name-input {
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  color: inherit;
+}
+
+.section-name-input:focus {
+  border-bottom-color: #8B0000;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 6px;
+  /* larger tap target for tablet */
+  min-width: 36px;
+  min-height: 36px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sections-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .sections-grid { grid-template-columns: 1fr; }
+  .edit-page-header { flex-direction: column; align-items: flex-start; }
+}

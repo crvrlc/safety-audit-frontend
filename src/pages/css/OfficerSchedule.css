@@ -1,0 +1,354 @@
+/* ── Layout ──────────────────────────────────────────── */
+.officer-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.schedule-header h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.schedule-header p {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin: 4px 0 0;
+}
+
+.schedule-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Form Card ───────────────────────────────────────── */
+.schedule-form-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid #f0f0f0;
+  padding: 28px;
+}
+
+.schedule-form-card h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a9a9a;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group label span {
+  color: #8B0000;
+}
+
+.form-control-custom {
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.form-control-custom:focus {
+  border-color: #8B0000;
+}
+
+.form-control-custom:disabled {
+  background-color: #f5f5f5;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.form-control-custom.readonly {
+  background-color: #f9f9f9;
+  color: #555;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group.half {
+  flex: 1;
+}
+
+/* ── Form Actions ────────────────────────────────────── */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.btn-form {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-form.cancel {
+  background-color: #ffffff;
+  border: 1.5px solid #e0e0e0;
+  color: #555;
+}
+
+.btn-form.cancel:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-form.draft {
+  background-color: #ffffff;
+  border: 1.5px solid #8B0000;
+  color: #8B0000;
+}
+
+.btn-form.draft:hover {
+  background-color: #fff5f5;
+}
+
+.btn-form.save {
+  background-color: #8B0000;
+  color: #ffffff;
+}
+
+.btn-form.save:hover {
+  background-color: #6b0000;
+}
+
+.btn-form:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Quick Links Card ────────────────────────────────── */
+.quick-links-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid #f0f0f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quick-links-card h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a9a9a;
+  margin-bottom: 4px;
+}
+
+.quick-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #f0f0f0;
+  background-color: #fafafa;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.quick-link-btn:hover {
+  border-color: #8B0000;
+  color: #8B0000;
+  background-color: #fff5f5;
+}
+
+.quick-link-icon {
+  font-size: 1.1rem;
+}
+
+/* ── Alert ───────────────────────────────────────────── */
+.form-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  margin-bottom: 16px;
+}
+
+.form-alert.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.form-alert.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+/* ── Success Modal ───────────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.modal-card h5 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.modal-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-modal {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.btn-modal:hover { opacity: 0.88; }
+
+.btn-modal.primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-modal.secondary {
+  background: #f0f4ff;
+  color: #2563eb;
+  border: 1.5px solid #c7d7fa;
+}
+
+.btn-modal.ghost {
+  background: transparent;
+  color: #6b7280;
+  border: 1.5px solid #e5e7eb;
+}
+
+/* ── Unit auto-display ───────────────────────────────────────────────────── */
+.unit-display {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  background: #f8fafc;
+  color: #1a1a2e;
+  font-weight: 500;
+  cursor: default;
+  user-select: none;
+}
+
+.unit-display.unit-empty {
+  color: #9ca3af;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 900px) {
+  .schedule-body {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-links-card {
+    order: -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .quick-link-btn {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-form {
+    width: 100%;
+    text-align: center;
+  }
+}

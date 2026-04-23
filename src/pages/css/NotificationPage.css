@@ -1,0 +1,29 @@
+.notif-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.notif-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notif-list label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

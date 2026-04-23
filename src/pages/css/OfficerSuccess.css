@@ -1,0 +1,97 @@
+.officer-success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.success-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid #f0f0f0;
+  padding: 48px;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+
+.success-card h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.success-card p {
+  font-size: 0.875rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.success-details {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.success-detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-success {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-success.primary {
+  background-color: #8B0000;
+  color: #ffffff;
+}
+
+.btn-success.primary:hover {
+  background-color: #6b0000;
+}
+
+.btn-success.outline {
+  background-color: #ffffff;
+  border: 1.5px solid #8B0000;
+  color: #8B0000;
+}
+
+.btn-success.outline:hover {
+  background-color: #fff5f5;
+}
+
+@media (max-width: 576px) {
+  .success-card {
+    padding: 32px 20px;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+}

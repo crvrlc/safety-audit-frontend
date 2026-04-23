@@ -1,0 +1,137 @@
+.resources-page {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titles */
+
+.resources-page h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.resources-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.resources-description {
+  color: #6c757d;
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+  /* max-width: 800px; */
+}
+
+.resources-main-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #2c2c54;
+}
+
+/* Section container */
+.resources-section {
+  margin-bottom: 32px;
+}
+
+/* Section header (like a label) */
+.section-header {
+  background: #d8d8d8;
+  border-left: 5px solid green;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2c2c54;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Grid layout */
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Cards */
+.inner-block {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
+  height: 100%;
+}
+
+.inner-block .section-header {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+/* Two-column layout */
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Each column acts like its own section */
+.section-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make header spacing consistent */
+.section-column .section-header {
+  margin-bottom: 10px;
+}
+
+/* .inner-block:hover {
+  transform: translateY(-2px);
+} */
+ 
+
+/* Titles inside cards */
+.block-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a1a2e;
+}
+
+.subtext {
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 12px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th, td {
+  border: 1px solid #e6e6e6;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+}

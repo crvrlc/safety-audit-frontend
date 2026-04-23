@@ -1,0 +1,558 @@
+/* ─── AdminAuditRecords.css ──────────────────────────────────────────────────
+   Matches the existing admin design system (AdminUsers pattern)
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Page layout ─────────────────────────────────────────────────────────── */
+.admin-audit-records {
+  padding: 24px;
+  max-width: 1400px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  font-size: 0.85rem;
+  color: #78909c;
+  margin: 0;
+}
+
+/* ── Loading spinner (reuse admin pattern) ───────────────────────────────── */
+.admin-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #8B0000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Stat cards grid ─────────────────────────────────────────────────────── */
+.ar-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ar-stat-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  transition: transform 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+
+.ar-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+.ar-stat-card--active {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.ar-stat-icon {
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.ar-stat-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.ar-stat-label {
+  font-size: 0.76rem;
+  color: #78909c;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* ── Filter row ──────────────────────────────────────────────────────────── */
+.filter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filter-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  color: #333;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.filter-input:focus {
+  border-color: #8B0000;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  color: #333;
+  background: #fff;
+  outline: none;
+  cursor: pointer;
+  min-width: 140px;
+  transition: border-color 0.15s;
+}
+
+.filter-select:focus {
+  border-color: #8B0000;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.table-wrap {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+
+.data-table thead tr {
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.data-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #78909c;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  color: #333;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.empty-row {
+  text-align: center;
+  color: #aaa;
+  padding: 40px !important;
+  font-size: 0.9rem;
+}
+
+/* ── Table cell helpers ──────────────────────────────────────────────────── */
+.ar-code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8B0000;
+  background: #fff5f5;
+  padding: 3px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.ar-office-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ar-office-name {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.ar-facility-name {
+  font-size: 0.78rem;
+  color: #78909c;
+}
+
+.ar-inspector {
+  font-weight: 500;
+  color: #333;
+}
+
+.ar-date-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ar-date-value {
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.ar-date-label {
+  font-size: 0.73rem;
+  color: #aaa;
+}
+
+/* ── Badges ──────────────────────────────────────────────────────────────── */
+.ar-status-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ar-type-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border: 1px solid;
+  background: #fff;
+  white-space: nowrap;
+}
+
+/* ── Action buttons (matches AdminUsers pattern) ─────────────────────────── */
+.action-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.btn-sm {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-sm:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.btn-sm:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-edit {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.btn-pdf {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.btn-pdf--disabled {
+  background: #f5f5f5;
+  color: #bbb;
+}
+
+/* ── Buttons (reuse global pattern) ─────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: #8B0000;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover {
+  background: #6e0000;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #f5f5f5;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+  background: #eeeeee;
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────────── */
+.ar-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ar-pagination-info {
+  font-size: 0.82rem;
+  color: #78909c;
+}
+
+.ar-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ar-page-btn {
+  min-width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ar-page-btn:hover:not(:disabled) {
+  border-color: #8B0000;
+  color: #8B0000;
+}
+
+.ar-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ar-page-btn--active {
+  background: #8B0000;
+  border-color: #8B0000;
+  color: #fff;
+  font-weight: 700;
+}
+
+.ar-page-ellipsis {
+  padding: 0 6px;
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* ── Modal (inherits au-modal from AdminUsers) ───────────────────────────── */
+.au-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.au-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.au-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.au-modal-close:hover {
+  color: #333;
+}
+
+.au-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* ── Detail Modal ────────────────────────────────────────────────────────── */
+.ar-detail-modal {
+  max-width: 580px;
+}
+
+.ar-detail-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ar-detail-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #8B0000;
+  margin: 0 0 6px;
+}
+
+.ar-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+  margin-bottom: 18px;
+}
+
+.ar-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ar-detail-label {
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.ar-detail-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.ar-detail-notes {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+}
+
+.ar-detail-notes p {
+  margin: 6px 0 0;
+  font-size: 0.87rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .admin-audit-records {
+    padding: 16px;
+  }
+
+  .ar-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ar-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-search-wrap {
+    min-width: unset;
+  }
+
+  .ar-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

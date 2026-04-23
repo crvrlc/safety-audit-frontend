@@ -1,0 +1,302 @@
+/* ── Layout ──────────────────────────────────────────── */
+.officer-conduct {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.conduct-header h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.conduct-header p {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin: 4px 0 0;
+}
+
+.conduct-body {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 20px;
+  align-items: start;
+}
+
+.conduct-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Details Card ────────────────────────────────────── */
+.details-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid #f0f0f0;
+  padding: 24px;
+}
+
+.details-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.details-card-header h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a9a9a;
+  margin: 0;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.detail-item label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9a9a9a;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.detail-item p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.detail-item .inspection-code {
+  font-family: monospace;
+  color: #8B0000;
+  font-size: 0.95rem;
+}
+
+.details-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn-edit {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1.5px solid #8B0000;
+  color: #8B0000;
+  transition: all 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #fff5f5;
+}
+
+.btn-begin {
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #8B0000;
+  border: none;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.btn-begin:hover {
+  background-color: #6b0000;
+}
+
+/* ── Status Badge ────────────────────────────────────── */
+.conduct-status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.conduct-status-badge.scheduled {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.conduct-status-badge.ongoing {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.conduct-status-badge.draft {
+  background-color: #f5f5f5;
+  color: #616161;
+}
+
+/* ── Reminders Card ──────────────────────────────────── */
+.reminders-card {
+  background-color: #fffbea;
+  border-radius: 12px;
+  border: 1.5px solid #ffe082;
+  padding: 20px;
+}
+
+.reminders-card h6 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #f59e0b;
+  margin-bottom: 14px;
+}
+
+.reminders-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reminders-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.reminder-icon {
+  font-size: 1rem;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Progress Stepper ────────────────────────────────── */
+.progress-stepper {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid #f0f0f0;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.progress-stepper h6 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a9a9a;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.step-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 2px solid #e0e0e0;
+  background-color: #ffffff;
+  color: #9a9a9a;
+}
+
+.step-circle.active {
+  background-color: #8B0000;
+  border-color: #8B0000;
+  color: #ffffff;
+}
+
+.step-circle.completed {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  color: #ffffff;
+}
+
+.step-label {
+  font-size: 0.825rem;
+  color: #9a9a9a;
+  font-weight: 500;
+}
+
+.step-label.active {
+  color: #8B0000;
+  font-weight: 700;
+}
+
+.step-label.completed {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.step-connector {
+  width: 2px;
+  height: 24px;
+  background-color: #e0e0e0;
+  margin: 4px 0 4px 15px;
+  align-self: flex-start;
+}
+
+.step-connector.completed {
+  background-color: #4caf50;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .conduct-body {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-stepper {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 16px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-actions {
+    flex-direction: column;
+  }
+}
