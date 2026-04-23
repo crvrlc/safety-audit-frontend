@@ -348,7 +348,7 @@ const OfficerInspections = () => {
 
   const renderActions = (audit) => {
   if (activeTab === 'ongoing') {
-    if (audit.status === 'ongoing') {
+   if (audit.status === 'ongoing') {
       return (
         <div className="action-btns">
           <button
@@ -356,6 +356,17 @@ const OfficerInspections = () => {
             onClick={() => navigate(`/officer/inspections/${audit.id}/checklist`)}
           >
             Resume
+          </button>
+          <button
+            className="btn-action delete"
+            onClick={() => {
+              const confirmed = window.confirm(
+                `Are you sure you want to delete inspection ${audit.inspectionCode}? This inspection is currently in progress and all checklist data will be lost.`
+              )
+              if (confirmed) handleDelete(audit.id)
+            }}
+          >
+            Delete
           </button>
         </div>
       )
