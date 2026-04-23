@@ -126,6 +126,8 @@ const OfficerHome = () => {
   // Uses createdAt → submittedAt (no startedAt field in model)
   const avgDurationLabel = calcAvgDuration(audits)
 
+  window.__debug = { findings, currentUser }
+
   const pendingCorrectiveActions = findings.filter(
     f => f.resolutionStatus === 'pending' || f.resolutionStatus === 'ongoing'
   ).length
