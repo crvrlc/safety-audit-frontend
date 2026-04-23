@@ -13,7 +13,7 @@ const Login = () => {
       <div className="login-header">
         <img src={ceatLogo} alt="CEAT Logo" className="login-header-logo" />
         <div>
-          <h4 className="login-header-title">Safety Audit Information System</h4>
+          <h4 className="login-header-title">Safety Audit Assessment System</h4>
           <small className="login-header-subtitle">
             College of Engineering and Agro-Industrial Technology
           </small>
