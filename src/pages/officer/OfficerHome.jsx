@@ -88,7 +88,11 @@ const OfficerHome = () => {
     Promise.all([getMyAudits(), getAllFindings()])
       .then(([auditsRes, findingsRes]) => {
         setAudits(auditsRes.data)
-        setFindings(findingsRes.data)
+        
+        // ✅ Only keep findings that belong to the current officer's audits
+        const myAuditIds = new Set(auditsRes.data.map(a => a.id))
+        const myFindings = findingsRes.data.filter(f => myAuditIds.has(f.audit?.id))
+        setFindings(myFindings)
       })
       .catch(err => console.error(err))
       .finally(() => setLoading(false))
@@ -125,9 +129,6 @@ const OfficerHome = () => {
 
   // Uses createdAt → submittedAt (no startedAt field in model)
   const avgDurationLabel = calcAvgDuration(audits)
-
-  window.__debug = { findings, currentUser }
-  setTimeout(() => console.log("DEBUG:", window.__debug), 3000)
 
   const pendingCorrectiveActions = findings.filter(
     f => f.resolutionStatus === 'pending' || f.resolutionStatus === 'ongoing'
