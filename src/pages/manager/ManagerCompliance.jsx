@@ -32,15 +32,17 @@ const ManagerCompliance = () => {
 }, [user])
 
   const getConditionClass = (rate) => {
-    if (rate >= 85) return 'good'
-    if (rate >= 65) return 'minor'
-    return 'critical'
+    if (rate == null) return 'unknown'
+    if (rate >= 90) return 'high'
+    if (rate >= 70) return 'moderate'
+    return 'low'
   }
 
   const getConditionLabel = (rate) => {
-    if (rate >= 85) return '🟢 Good'
-    if (rate >= 65) return '🟡 Minor Issues'
-    return '🔴 Critical'
+    if (rate == null) return '—'
+    if (rate >= 90) return '🟢 High'
+    if (rate >= 70) return '🟡 Moderate'
+    return '🔴 Low'
   }
 
   if (loading) {
