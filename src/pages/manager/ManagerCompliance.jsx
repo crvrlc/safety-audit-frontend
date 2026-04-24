@@ -67,7 +67,7 @@ const ManagerCompliance = () => {
     <div className="manager-compliance">
       <div className="page-header">
         <div>
-          <h4 className="page-title">Facility Condition Tracker - {offices[0]?.facilityName}</h4>
+          <h4 className="page-title">Facility Condition Tracker</h4>
           <p className="page-subtitle">
             Monitor the current safety condition of facilities based on inspection results and corrective actions
           </p>
