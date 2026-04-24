@@ -88,10 +88,15 @@ const OfficerHome = () => {
     Promise.all([getMyAudits(), getAllFindings()])
       .then(([auditsRes, findingsRes]) => {
         setAudits(auditsRes.data)
-        
-        // ✅ Only keep findings that belong to the current officer's audits
+
+       
         const myAuditIds = new Set(auditsRes.data.map(a => a.id))
         const myFindings = findingsRes.data.filter(f => myAuditIds.has(f.audit?.id))
+
+        console.log("myAuditIds:", [...myAuditIds])
+        console.log("myFindings:", myFindings)
+        console.log("allFindings:", findingsRes.data.length)
+
         setFindings(myFindings)
       })
       .catch(err => console.error(err))
