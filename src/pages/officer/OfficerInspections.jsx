@@ -359,12 +359,7 @@ const OfficerInspections = () => {
           </button>
           <button
             className="btn-action delete"
-            onClick={() => {
-              const confirmed = window.confirm(
-                `Are you sure you want to delete inspection ${audit.inspectionCode}? This inspection is currently in progress and all checklist data will be lost.`
-              )
-              if (confirmed) handleDelete(audit.id)
-            }}
+            onClick={() => handleDelete(audit.id)}  // ✅ just call it directly
           >
             Delete
           </button>
