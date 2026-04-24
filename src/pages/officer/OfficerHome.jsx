@@ -127,6 +127,7 @@ const OfficerHome = () => {
   const avgDurationLabel = calcAvgDuration(audits)
 
   window.__debug = { findings, currentUser }
+  setTimeout(() => console.log("DEBUG:", window.__debug), 3000)
 
   const pendingCorrectiveActions = findings.filter(
     f => f.resolutionStatus === 'pending' || f.resolutionStatus === 'ongoing'
