@@ -24,9 +24,10 @@ const OfficerChecklist = () => {
     return saved ? parseInt(saved) : 0
   })
   const timerRef = useRef(null)
-  const fileInputRef = useRef(null)
-  const [activeEvidenceItem, setActiveEvidenceItem] = useState(null)
-
+  // const fileInputRef = useRef(null)
+  // const [activeEvidenceItem, setActiveEvidenceItem] = useState(null)
+  const fileRefs = useRef({})
+  
   // Load audit + checklist
   useEffect(() => {
     getAuditById(id).then(res => {
@@ -172,14 +173,14 @@ const handleEvidenceUpload = async (e, itemId) => {
         return updated
       })
 
-      console.log('itemId:', itemId, typeof itemId)
-      console.log('saved items:', result.saved.map(s => ({ id: s.checklistItemId, type: typeof s.checklistItemId })))
+      // console.log('itemId:', itemId, typeof itemId)
+      // console.log('saved items:', result.saved.map(s => ({ id: s.checklistItemId, type: typeof s.checklistItemId })))
 
       // Get the ID for the current item
-      const savedItem = result.saved.find(s => s.checklistItemId === itemId)
+      const savedItem = result.saved.find(s => s.checklistItemId === Number(itemId))
 
-      console.log('savedItem:', savedItem)
-      console.log('responseId:', savedItem?.id) 
+      // console.log('savedItem:', savedItem)
+      // console.log('responseId:', savedItem?.id) 
 
       responseId = savedItem?.id
     } catch (err) {
@@ -198,9 +199,11 @@ const handleEvidenceUpload = async (e, itemId) => {
   formData.append('file', file)
 
   try {
-    const res = await api.post(`/evidence/response/${responseId}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    // const res = await api.post(`/evidence/response/${responseId}`, formData, {
+    //   headers: { 'Content-Type': 'multipart/form-data' }
+    // })
+
+    const res = await api.post(`/evidence/response/${responseId}`, formData)
 
     setResponses(prev => ({
       ...prev,
@@ -209,6 +212,8 @@ const handleEvidenceUpload = async (e, itemId) => {
         evidence: [...(prev[itemId]?.evidence || []), res.data]
       }
     }))
+
+    e.target.value = ''
   } catch (err) {
     console.error('Evidence upload error:', err)
   }
@@ -488,14 +493,24 @@ const handleEvidenceUpload = async (e, itemId) => {
                           {/* Evidence upload */}
                           <button
                             className="btn-evidence"
-                            onClick={() => {
-                              setActiveEvidenceItem(item.id)
-                              fileInputRef.current?.click()
-                            }}
+                            // onClick={() => {
+                            //   setActiveEvidenceItem(item.id)
+                            //   fileInputRef.current?.click()
+                            // }}
+                            onClick={() => fileRefs.current[item.id]?.click()}
                             disabled={!answer}
                           >
                             📎 Add Photo/File
                           </button>
+
+                            {/* Hidden file input — per item */}
+                            <input
+                              type="file"
+                              style={{ display: 'none' }}
+                              accept="image/*,.pdf"
+                              ref={el => fileRefs.current[item.id] = el}
+                              onChange={e => handleEvidenceUpload(e, item.id)}
+                            />
 
                           {/* Evidence previews */}
                           {response?.evidence?.length > 0 && (
@@ -534,13 +549,22 @@ const handleEvidenceUpload = async (e, itemId) => {
       </div>
 
       {/* Hidden file input */}
-      <input
+      {/* <input
         type="file"
         ref={fileInputRef}
         style={{ display: 'none' }}
         accept="image/*,.pdf"
         onChange={e => handleEvidenceUpload(e, activeEvidenceItem)}
-      />
+      /> */}
+
+      {/* Hidden file input — per item
+      <input
+        type="file"
+        style={{ display: 'none' }}
+        accept="image/*,.pdf"
+        ref={el => fileRefs.current[item.id] = el}
+        onChange={e => handleEvidenceUpload(e, item.id)}
+      /> */}
 
       {/* Bottom Actions */}
       <div className="checklist-actions">
