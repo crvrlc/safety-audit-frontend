@@ -170,7 +170,7 @@ const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
   const [resolutionEvidence, setResolutionEvidence] = useState(finding?.resolutionEvidence || null)
   const [uploading,          setUploading]          = useState(false)
   const [saving,             setSaving]             = useState(false)
-  const fileRef = useRef(null)
+  // const fileRef = useRef(null)
 
   const itemStatement = (() => {
     for (const section of sections) {
@@ -187,11 +187,12 @@ const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
     try {
       const formData = new FormData()
       formData.append('file', file)
-      const res = await api.post(
-        `/evidence/response/${finding.id}`,
-        formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
-      )
+      // const res = await api.post(
+      //   `/evidence/response/${finding.id}`,
+      //   formData,
+      //   { headers: { 'Content-Type': 'multipart/form-data' } }
+      // )
+      const res = await api.post(`/evidence/response/${finding.id}`, formData)
       setResolutionEvidence(res.data.fileUrl)
     } catch (err) {
       console.error('Upload error:', err)
@@ -275,13 +276,13 @@ const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
 
           <div className="modal-field">
             <label className="modal-label">Photo Evidence (Optional)</label>
-            <input
+            {/* <input
               type="file"
               ref={fileRef}
               style={{ display: 'none' }}
               accept="image/*,.pdf"
               onChange={handleFileUpload}
-            />
+            /> */}
             {resolutionEvidence ? (
               <div className="resolution-evidence-preview">
                 {resolutionEvidence.match(/\.(jpg|jpeg|png|gif|webp)/i) ? (
@@ -303,15 +304,29 @@ const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
                   Remove
                 </button>
               </div>
-            ) : (
-              <button
-                className="btn-secondary"
-                onClick={() => fileRef.current?.click()}
-                disabled={uploading}
-              >
+            ) : 
+            // (
+            //   <button
+            //     className="btn-secondary"
+            //     onClick={() => fileRef.current?.click()}
+            //     disabled={uploading}
+            //   >
+            //     {uploading ? 'Uploading…' : '📎 Upload Photo / File'}
+            //   </button>
+            // )
+            (
+              <label className="btn-secondary" style={{ cursor: 'pointer', display: 'inline-block' }}>
                 {uploading ? 'Uploading…' : '📎 Upload Photo / File'}
-              </button>
-            )}
+                <input
+                  type="file"
+                  style={{ display: 'none' }}
+                  accept="image/*,.pdf"
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                />
+              </label>
+            )
+            }
           </div>
         </div>
         <div className="modal-footer">
