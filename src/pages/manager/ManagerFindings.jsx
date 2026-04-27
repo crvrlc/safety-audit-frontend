@@ -130,10 +130,10 @@ const AssignModal = ({ finding, sections, onClose, onSaved }) => {
           </div>
 
           <div className="modal-field">
-            <label className="modal-label">Assign To (Team / Person) *</label>
+            <label className="modal-label">Assign To (Email) *</label>
             <input
               className="modal-input"
-              placeholder="e.g. Electrical Team, John Santos"
+              placeholder="e.g. jdcruz@up.edu.ph"
               value={assignedTo}
               onChange={e => setAssignedTo(e.target.value)}
             />
