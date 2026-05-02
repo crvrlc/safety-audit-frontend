@@ -167,10 +167,10 @@ const AdminAuditRecords = () => {
     const reportFn = pickReportFn(audit.status)
 
     // auditResponses already included in getAudits — use directly if present
-    if (audit.auditResponses?.length > 0) {
-      reportFn(audit)
-      return
-    }
+    // if (audit.auditResponses?.length > 0) {
+    //   reportFn(audit)
+    //   return
+    // }
     // Fetch full audit with nested data if not already loaded
     try {
       const res = await api.get(`/audits/${audit.id}`)

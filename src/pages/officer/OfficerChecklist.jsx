@@ -27,6 +27,7 @@ const OfficerChecklist = () => {
   // const fileInputRef = useRef(null)
   // const [activeEvidenceItem, setActiveEvidenceItem] = useState(null)
   const fileRefs = useRef({})
+  const [lightboxUrl, setLightboxUrl] = useState(null)
   
   // Load audit + checklist
   useEffect(() => {
@@ -459,9 +460,17 @@ const handleEvidenceUpload = async (e, itemId) => {
                       <td>
                         <div className="remarks-cell">
 
-                          {/* If NO → show finding + corrective action */}
                           {answer === 'no' ? (
                             <>
+                              {/* Hidden file input */}
+                              <input
+                                type="file"
+                                style={{ display: 'none' }}
+                                accept="image/*,.pdf"
+                                ref={el => fileRefs.current[item.id] = el}
+                                onChange={e => handleEvidenceUpload(e, item.id)}
+                              />
+
                               <textarea
                                 className="remarks-input"
                                 placeholder="Describe the finding..."
@@ -477,6 +486,42 @@ const handleEvidenceUpload = async (e, itemId) => {
                                 onChange={e => handleCorrectiveAction(item.id, e.target.value)}
                                 rows={2}
                               />
+
+                              {/* Evidence upload */}
+                              <button
+                                className="btn-evidence"
+                                onClick={() => fileRefs.current[item.id]?.click()}
+                              >
+                                📎 Add Photo/File
+                              </button>
+
+                              {/* Evidence previews */}
+                              {response?.evidence?.length > 0 && (
+                                <div className="evidence-preview">
+                                  {response.evidence.map((ev, i) => (
+                                    <div key={i} className="evidence-thumb-wrapper">
+                                      {ev.fileType?.startsWith('image') ? (
+                                        <img
+                                          src={ev.fileUrl}
+                                          alt="evidence"
+                                          className="evidence-thumb"
+                                          loading="lazy"
+                                          style={{ cursor: 'zoom-in' }}
+                                          onClick={() => setLightboxUrl(ev.fileUrl)}
+                                        />
+                                      ) : (
+                                        <span style={{ fontSize: '0.75rem', color: '#555' }}>📄 File {i + 1}</span>
+                                      )}
+                                      <button
+                                        className="evidence-remove-btn"
+                                        onClick={() => handleRemoveEvidence(item.id, ev.id)}
+                                      >
+                                        ✕
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                             </>
                           ) : (
                             <textarea
@@ -488,55 +533,6 @@ const handleEvidenceUpload = async (e, itemId) => {
                               disabled={!answer}
                             />
                           )}
-
-                         
-                          {/* Evidence upload */}
-                          <button
-                            className="btn-evidence"
-                            // onClick={() => {
-                            //   setActiveEvidenceItem(item.id)
-                            //   fileInputRef.current?.click()
-                            // }}
-                            onClick={() => fileRefs.current[item.id]?.click()}
-                            disabled={!answer}
-                          >
-                            📎 Add Photo/File
-                          </button>
-
-                            {/* Hidden file input — per item */}
-                            <input
-                              type="file"
-                              style={{ display: 'none' }}
-                              accept="image/*,.pdf"
-                              ref={el => fileRefs.current[item.id] = el}
-                              onChange={e => handleEvidenceUpload(e, item.id)}
-                            />
-
-                          {/* Evidence previews */}
-                          {response?.evidence?.length > 0 && (
-                            <div className="evidence-preview">
-                              {response.evidence.map((ev, i) => (
-                                <div key={i} className="evidence-thumb-wrapper">
-                                  {ev.fileType?.startsWith('image') ? (
-                                    <img
-                                      src={ev.fileUrl}
-                                      alt="evidence"
-                                      className="evidence-thumb"
-                                      loading="lazy"
-                                    />
-                                  ) : (
-                                    <span style={{ fontSize: '0.75rem', color: '#555' }}>📄 File {i + 1}</span>
-                                  )}
-                                  <button
-                                    className="evidence-remove-btn"
-                                    onClick={() => handleRemoveEvidence(item.id, ev.id)}
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          )}
                         </div>
                       </td>
                     </tr>
@@ -547,24 +543,6 @@ const handleEvidenceUpload = async (e, itemId) => {
           </div>
         )}
       </div>
-
-      {/* Hidden file input */}
-      {/* <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        accept="image/*,.pdf"
-        onChange={e => handleEvidenceUpload(e, activeEvidenceItem)}
-      /> */}
-
-      {/* Hidden file input — per item
-      <input
-        type="file"
-        style={{ display: 'none' }}
-        accept="image/*,.pdf"
-        ref={el => fileRefs.current[item.id] = el}
-        onChange={e => handleEvidenceUpload(e, item.id)}
-      /> */}
 
       {/* Bottom Actions */}
       <div className="checklist-actions">
@@ -608,6 +586,32 @@ const handleEvidenceUpload = async (e, itemId) => {
           )}
         </div>
       </div>
+      {/* Lightbox */}
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
+      )}
     </div>
   )
 }

@@ -27,6 +27,11 @@ const OfficerFindings = () => {
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
 
+  const [lightboxUrl, setLightboxUrl] = useState(null)
+  const remarksWithContent = responses.filter(
+    r => (r.answer === 'yes' || r.answer === 'na') && r.remarks?.trim()
+  )
+
   useEffect(() => {
     getAuditById(id)
       .then(res => {
@@ -59,7 +64,7 @@ const OfficerFindings = () => {
 
   const noResponses        = responses.filter(r => r.answer === 'no')
   const findingsWithContent = noResponses.filter(
-    r => r.finding?.trim() || r.correctiveAction?.trim()
+    r => r.finding?.trim() || r.correctiveAction?.trim() || r.evidence?.length > 0
   )
   const findingsCount      = findingsWithContent.length
   const correctiveActCount = noResponses.filter(r => r.correctiveAction?.trim()).length
@@ -308,7 +313,7 @@ const OfficerFindings = () => {
                                   src={ev.fileUrl}
                                   alt={`evidence ${i + 1}`}
                                   className="findings-evidence-thumb"
-                                  onClick={() => window.open(ev.fileUrl, '_blank')}
+                                  onClick={() => setLightboxUrl(ev.fileUrl)}
                                   title="Click to view full size"
                                 />
                               ) : (
@@ -332,6 +337,48 @@ const OfficerFindings = () => {
               </div>
             )}
           </div>
+
+          {/* Remarks Table */}
+          {remarksWithContent.length > 0 && (
+            <div className="findings-table-card">
+              <div className="findings-table-card-header">
+                <h6>Remarks</h6>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table className="findings-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Section</th>
+                      <th>Checklist Item</th>
+                      <th>Answer</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {remarksWithContent.map((r, index) => {
+                      const { statement, section } = getItemStatement(r.checklistItemId)
+                      return (
+                        <tr key={r.id}>
+                          <td>{index + 1}</td>
+                          <td><small className="text-muted">{section}</small></td>
+                          <td style={{ maxWidth: '180px' }}><small>{statement}</small></td>
+                          <td>
+                            <span className={`severity-badge ${r.answer === 'yes' ? 'low' : 'na'}`}>
+                              {r.answer === 'yes' ? 'Yes' : 'N/A'}
+                            </span>
+                          </td>
+                          <td style={{ maxWidth: '220px' }}>
+                            <small>{r.remarks}</small>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="findings-actions">
@@ -382,6 +429,32 @@ const OfficerFindings = () => {
           })}
         </div>
       </div>
+      {/* Lightbox — before final closing </div> */}
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
+      )}
     </div>
   )
 }
