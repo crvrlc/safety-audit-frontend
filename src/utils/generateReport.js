@@ -643,7 +643,7 @@ export const generateReport = (audit) => {
         <div class="certification-note">
           I hereby certify that the information contained in this inspection report is true and accurate
           to the best of my knowledge and belief, and that this inspection was conducted in accordance
-          with the safety audit procedures of the College of Engineering, Architecture and Technology (CEAT).
+          with the safety audit procedures of the College of Engineering and Agro-Industrial Technology (CEAT).
         </div>
         <div class="signature-row">
           <div class="signature-block">

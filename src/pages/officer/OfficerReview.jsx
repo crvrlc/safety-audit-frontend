@@ -22,6 +22,8 @@ const OfficerReview = () => {
   const [confirmed, setConfirmed] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
+  const [lightboxUrl, setLightboxUrl] = useState(null)
+
   useEffect(() => {
     getAuditById(id)
       .then(res => setAudit(res.data))
@@ -51,11 +53,19 @@ const OfficerReview = () => {
   const complianceRate = applicable > 0
     ? Math.round((yesCount / applicable) * 100) : 0
 
-  // Findings = no-answers with finding or corrective action written
+  // Findings = no-answers with finding or corrective action written, and/or photo attached
   const findingsWithContent = responses.filter(
-    r => r.answer === 'no' && (r.finding?.trim() || r.correctiveAction?.trim())
+    r => r.answer === 'no' && (
+      r.finding?.trim() ||
+      r.correctiveAction?.trim() ||
+      r.evidence?.length > 0
+    )
   )
   const highCount = findingsWithContent.filter(r => r.severity === 'high').length
+
+  const remarksWithContent = responses.filter(
+    r => (r.answer === 'yes' || r.answer === 'na') && r.remarks?.trim()
+  )
 
   const getComplianceClass = (rate) => {
     if (rate >= 90) return 'high'
@@ -324,7 +334,8 @@ const OfficerReview = () => {
                                     src={ev.fileUrl}
                                     alt={`evidence ${i + 1}`}
                                     className="findings-evidence-thumb"
-                                    onClick={() => window.open(ev.fileUrl, '_blank')}
+                                    style={{ cursor: 'zoom-in' }}
+                                    onClick={() => setLightboxUrl(ev.fileUrl)}
                                     title="Click to view full size"
                                   />
                                 ) : (
@@ -342,6 +353,49 @@ const OfficerReview = () => {
                 </div>
               )}
             </div>
+
+            {/* Remarks Table */}
+            {remarksWithContent.length > 0 && (
+              <div className="findings-table-card">
+                <div className="findings-table-card-header">
+                  <h6>Remarks</h6>
+                </div>
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="findings-table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Section</th>
+                        <th>Checklist Item</th>
+                        <th>Answer</th>
+                        <th>Remarks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {remarksWithContent.map((r, index) => {
+                        const section = sections.find(s => s.items.some(i => i.id === r.checklistItemId))
+                        const item = section?.items.find(i => i.id === r.checklistItemId)
+                        return (
+                          <tr key={r.id}>
+                            <td>{index + 1}</td>
+                            <td><small className="text-muted">{section?.name || '—'}</small></td>
+                            <td style={{ maxWidth: '180px' }}><small>{item?.statement || '—'}</small></td>
+                            <td>
+                              <span className={`severity-badge ${r.answer === 'yes' ? 'low' : 'na'}`}>
+                                {r.answer === 'yes' ? 'Yes' : 'N/A'}
+                              </span>
+                            </td>
+                            <td style={{ maxWidth: '220px' }}>
+                              <small>{r.remarks}</small>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
 
          {/* Confirmation */}
           <div className="review-confirmation">
@@ -410,6 +464,32 @@ const OfficerReview = () => {
             })}
           </div>
       </div>
+      {/* Lightbox */}
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
+      )}
     </div>
   )
 }

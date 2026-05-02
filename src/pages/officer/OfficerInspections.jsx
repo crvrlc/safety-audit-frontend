@@ -42,7 +42,7 @@ const statusConfig = {
 
 const getComplianceClass = (rate) => {
   if (!rate) return ''
-  if (rate >= 90) return ''
+  if (rate >= 90) return 'high'
   if (rate >= 70) return 'moderate'
   return 'low'
 }
