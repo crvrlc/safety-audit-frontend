@@ -13,7 +13,15 @@ export const generateReport = (audit) => {
     ? Math.round((yesCount / applicable) * 100) : 0
 
   const findingsWithContent = responses.filter(
-    r => r.answer === 'no' && (r.finding?.trim() || r.correctiveAction?.trim())
+    r => r.answer === 'no' && (
+      r.finding?.trim() ||
+      r.correctiveAction?.trim() ||
+      r.evidence?.length > 0
+    )
+  )
+
+  const remarksWithContent = responses.filter(
+    r => (r.answer === 'yes' || r.answer === 'na') && r.remarks?.trim()
   )
 
   const correctiveActCount = responses.filter(
@@ -512,12 +520,20 @@ export const generateReport = (audit) => {
             <p>${audit.office?.name || '—'}</p>
           </div>
           <div class="detail-item">
+            <label>Facility Manager</label>
+            <p>${audit.office?.facility?.facilityManagerName || '—'}</p>
+          </div>
+          <div class="detail-item">
             <label>Inspector</label>
             <p>${audit.inspector?.name || '—'}</p>
           </div>
           <div class="detail-item">
             <label>Scheduled Date</label>
             <p>${formatDate(audit.scheduledAt)}</p>
+          </div>
+          <div class="detail-item">
+            <label>Completed Date</label>
+            <p>${formatDate(audit.completedAt)}</p>
           </div>
           <div class="detail-item">
             <label>Inspection Duration</label>
@@ -604,7 +620,6 @@ export const generateReport = (audit) => {
                 <th>Finding</th>
                 <th>Corrective Action</th>
                 <th style="width:56px">Severity</th>
-                <th style="width:80px">Evidence</th>
               </tr>
             </thead>
             <tbody>
@@ -612,10 +627,27 @@ export const generateReport = (audit) => {
                 const { statement, section } = getItemStatement(r.checklistItemId)
                 const evidenceHtml = (r.evidence || []).map((ev, ei) => {
                   if (ev.fileType?.startsWith('image')) {
-                    return `<img src="${ev.fileUrl}" alt="evidence ${ei + 1}" class="evidence-thumb" />`
+                    return `
+                      <div style="margin: 6px 0;">
+                        <img 
+                          src="${ev.fileUrl}" 
+                          alt="evidence ${ei + 1}" 
+                          style="
+                            width: 100%;
+                            max-width: 480px;
+                            height: auto;
+                            border-radius: 6px;
+                            border: 1px solid #ddd;
+                            display: block;
+                            margin-bottom: 4px;
+                          " 
+                        />
+                        <span style="font-size:9px; color:#888;">Photo ${ei + 1}</span>
+                      </div>
+                    `
                   }
                   return `<a href="${ev.fileUrl}" class="evidence-file-link" target="_blank">📄 File ${ei + 1}</a>`
-                }).join('') || '—'
+                }).join('')
 
                 return `
                   <tr>
@@ -630,14 +662,62 @@ export const generateReport = (audit) => {
                         ${r.severity || 'medium'}
                       </span>
                     </td>
-                    <td>${evidenceHtml}</td>
                   </tr>
+                  ${evidenceHtml ? `
+                  <tr>
+                    <td colspan="6" style="background:#fafafa; padding: 10px 12px;">
+                      <div style="font-size:9px; font-weight:600; color:#8B0000; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px;">
+                        📎 Evidence Photos
+                      </div>
+                      <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                        ${evidenceHtml}
+                      </div>
+                    </td>
+                  </tr>` : ''}
                 `
               }).join('')}
             </tbody>
           </table>
           `
         }
+
+        <!-- Remarks Table -->
+        ${(() => {
+          const remarksWithContent = responses.filter(
+            r => (r.answer === 'yes' || r.answer === 'na') && r.remarks?.trim()
+          )
+          if (remarksWithContent.length === 0) return ''
+          return `
+            <div class="section-title">Remarks</div>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:24px">#</th>
+                  <th style="width:100px">Section</th>
+                  <th>Checklist Item</th>
+                  <th style="width:50px">Answer</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${remarksWithContent.map((r, i) => {
+                  const { statement, section } = getItemStatement(r.checklistItemId)
+                  return `
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td style="color:#666; font-size:9px">${section}</td>
+                      <td>${statement}</td>
+                      <td style="text-transform:uppercase; font-weight:600; color:${r.answer === 'yes' ? '#2e7d32' : '#888'}">
+                        ${r.answer === 'yes' ? 'Yes' : 'N/A'}
+                      </td>
+                      <td>${r.remarks}</td>
+                    </tr>
+                  `
+                }).join('')}
+              </tbody>
+            </table>
+          `
+        })()}
         <!-- Certification -->
         <div class="section-title">Certification</div>
         <div class="certification-note">
