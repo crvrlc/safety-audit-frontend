@@ -491,8 +491,9 @@ const handleEvidenceUpload = async (e, itemId) => {
                               <button
                                 className="btn-evidence"
                                 onClick={() => fileRefs.current[item.id]?.click()}
+                                disabled={response?.evidence?.length > 0} 
                               >
-                                📎 Add Photo/File
+                                {response?.evidence?.length > 0 ? '📎 Photo Added' : '📎 Add Photo'}
                               </button>
 
                               {/* Evidence previews */}
