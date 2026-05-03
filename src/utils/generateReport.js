@@ -524,16 +524,16 @@ export const generateReport = (audit) => {
             <p>${audit.office?.facility?.facilityManagerName || '—'}</p>
           </div>
           <div class="detail-item">
-            <label>Inspector</label>
-            <p>${audit.inspector?.name || '—'}</p>
-          </div>
-          <div class="detail-item">
             <label>Scheduled Date</label>
             <p>${formatDate(audit.scheduledAt)}</p>
           </div>
           <div class="detail-item">
-            <label>Completed Date</label>
-            <p>${formatDate(audit.completedAt)}</p>
+            <label>Date Submitted</label>
+            <p>${formatDate(audit.submittedAt)}</p>
+          </div>
+          <div class="detail-item">
+            <label>Inspector</label>
+            <p>${audit.inspector?.name || '—'}</p>
           </div>
           <div class="detail-item">
             <label>Inspection Duration</label>
@@ -633,16 +633,14 @@ export const generateReport = (audit) => {
                           src="${ev.fileUrl}" 
                           alt="evidence ${ei + 1}" 
                           style="
-                            width: 100%;
-                            max-width: 480px;
-                            height: auto;
+                            width: 200px;
+                            height: 160px;
+                            object-fit: cover;
                             border-radius: 6px;
                             border: 1px solid #ddd;
                             display: block;
-                            margin-bottom: 4px;
-                          " 
+                          "
                         />
-                        <span style="font-size:9px; color:#888;">Photo ${ei + 1}</span>
                       </div>
                     `
                   }
