@@ -634,8 +634,8 @@ export const generateReport = (audit) => {
                           alt="evidence ${ei + 1}" 
                           style="
                             width: 200px;
-                            height: 160px;
-                            object-fit: cover;
+                            height: auto;
+                            object-fit: contain;
                             border-radius: 6px;
                             border: 1px solid #ddd;
                             display: block;
