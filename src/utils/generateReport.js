@@ -615,37 +615,23 @@ export const generateReport = (audit) => {
             <thead>
               <tr>
                 <th style="width:24px">#</th>
-                <th style="width:100px">Section</th>
+                <th style="width:90px">Section</th>
                 <th>Checklist Item</th>
                 <th>Finding</th>
                 <th>Corrective Action</th>
                 <th style="width:56px">Severity</th>
+                <th style="width:110px">Evidence</th>
               </tr>
             </thead>
             <tbody>
               ${findingsWithContent.map((r, i) => {
                 const { statement, section } = getItemStatement(r.checklistItemId)
-                const evidenceHtml = (r.evidence || []).map((ev, ei) => {
-                  if (ev.fileType?.startsWith('image')) {
-                    return `
-                      <div style="margin: 6px 0;">
-                        <img 
-                          src="${ev.fileUrl}" 
-                          alt="evidence ${ei + 1}" 
-                          style="
-                            width: 200px;
-                            height: auto;
-                            object-fit: contain;
-                            border-radius: 6px;
-                            border: 1px solid #ddd;
-                            display: block;
-                          "
-                        />
-                      </div>
-                    `
-                  }
-                  return `<a href="${ev.fileUrl}" class="evidence-file-link" target="_blank">📄 File ${ei + 1}</a>`
-                }).join('')
+                const ev = r.evidence?.[0]
+                const evidenceHtml = ev
+                  ? ev.fileType?.startsWith('image')
+                    ? `<img src="${ev.fileUrl}" style="width:100px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;" />`
+                    : `<a href="${ev.fileUrl}" target="_blank" class="evidence-file-link">📄 File</a>`
+                  : '—'
 
                 return `
                   <tr>
@@ -655,23 +641,12 @@ export const generateReport = (audit) => {
                     <td>${r.finding || '—'}</td>
                     <td>${r.correctiveAction || '—'}</td>
                     <td>
-                      <span class="severity-badge"
-                        style="background:${getSeverityColor(r.severity)}">
+                      <span class="severity-badge" style="background:${getSeverityColor(r.severity)}">
                         ${r.severity || 'medium'}
                       </span>
                     </td>
+                    <td>${evidenceHtml}</td>
                   </tr>
-                  ${evidenceHtml ? `
-                  <tr>
-                    <td colspan="6" style="background:#fafafa; padding: 10px 12px;">
-                      <div style="font-size:9px; font-weight:600; color:#8B0000; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px;">
-                        📎 Evidence Photos
-                      </div>
-                      <div style="display:flex; flex-wrap:wrap; gap:10px;">
-                        ${evidenceHtml}
-                      </div>
-                    </td>
-                  </tr>` : ''}
                 `
               }).join('')}
             </tbody>
