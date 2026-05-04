@@ -620,7 +620,7 @@ export const generateReport = (audit) => {
                 <th>Finding</th>
                 <th>Corrective Action</th>
                 <th style="width:56px">Severity</th>
-                <th style="width:110px">Evidence</th>
+                <th style="width:130px">Evidence</th>
               </tr>
             </thead>
             <tbody>
@@ -629,7 +629,7 @@ export const generateReport = (audit) => {
                 const ev = r.evidence?.[0]
                 const evidenceHtml = ev
                   ? ev.fileType?.startsWith('image')
-                    ? `<img src="${ev.fileUrl}" style="width:100px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;" />`
+                    ? `<img src="${ev.fileUrl}" style="width:120px; height:120px; object-fit:cover; border-radius:4px; border:1px solid #ddd;" />`
                     : `<a href="${ev.fileUrl}" target="_blank" class="evidence-file-link">📄 File</a>`
                   : '—'
 

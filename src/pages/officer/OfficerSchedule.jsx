@@ -191,7 +191,7 @@ const OfficerSchedule = () => {
         </button>
         <button
           className="btn-modal secondary"
-          onClick={() => navigate('/officer/inspections')}
+          onClick={() => navigate('/officer/inspections?tab=scheduled')}
         >
           View Scheduled Inspections
         </button>
