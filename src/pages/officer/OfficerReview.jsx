@@ -431,12 +431,12 @@ const OfficerReview = () => {
             >
               {isSubmitted ? '✅ Already Submitted' : submitting ? 'Submitting...' : ' Submit to Facility Manager'}
             </button>
-            <button
+            {/* <button
               className="btn-review pdf"
               onClick={() => generateReport(audit)}
             >
               📄 Generate PDF
-            </button>
+            </button> */}
           </div>
  
         </div>

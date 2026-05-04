@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
-import { getMyAudits, deleteAudit, startAudit, getAuditById } from '../../services/auditService'
+import { getMyAudits, deleteAudit, getAuditById } from '../../services/auditService'
 import { generateReport } from '../../utils/generateReport'
 import { generateResolutionReport } from '../../utils/generateResolutionReport'
 import {
@@ -315,10 +315,10 @@ const OfficerInspections = () => {
 
   const handleStart = async (audit) => {
     try {
-      console.log('FULL AUDIT:', audit)
-      console.log('AUDIT ID:', audit?.id)   
+      // console.log('FULL AUDIT:', audit)
+      // console.log('AUDIT ID:', audit?.id)   
 
-      await startAudit(audit.id)
+      // await startAudit(audit.id)
       navigate(`/officer/inspections/${audit.id}/start`)
       // fetchAudits()
     } catch (err) {
