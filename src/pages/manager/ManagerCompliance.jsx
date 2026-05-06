@@ -45,6 +45,18 @@ const ManagerCompliance = () => {
     return '🔴 Low'
   }
 
+  const getRateColor = (rate) => {
+  if (rate >= 85) return '#166534'
+  if (rate >= 70) return '#b45309'
+  return '#b91c1c'
+}
+
+  const getFacilityStatusStyle = (status) => {
+    if (status === 'Compliant')        return { background: '#dcfce7', color: '#166534' }
+    if (status === 'Needs Monitoring') return { background: '#fef9c3', color: '#b45309' }
+    return                                    { background: '#fee2e2', color: '#b91c1c' }
+  }
+
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -57,6 +69,7 @@ const ManagerCompliance = () => {
   const trendData     = data?.trendData         || []
   const perfData      = data?.performanceData   || []
   const recurringIssues = data?.recurringIssues || []
+  const facilityCompliance = data?.facilityCompliance || []
 
   const goodCount     = offices.filter(o => o.complianceRate >= 85).length
   const minorCount    = offices.filter(o => o.complianceRate >= 65 && o.complianceRate < 85).length
@@ -239,6 +252,59 @@ const ManagerCompliance = () => {
                   )}
                 </div>
                 <span className="recurring-count">{issue.count}x</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Facility Ranking */}
+      <div className="compliance-card" style={{ marginTop: 20 }}>
+        <div className="card-header">
+          <h6>Facility Compliance Ranking</h6>
+          <span className="card-sub">Best to worst</span>
+        </div>
+        {facilityCompliance.length === 0 ? (
+          <div className="compliance-empty">No facility data yet</div>
+        ) : (
+          <div className="facility-ranking-list">
+            {facilityCompliance.map((f, i) => (
+              <div key={i} className="facility-rank-item">
+                <div
+                  className="facility-rank-number"
+                  style={{ color: i === 0 ? '#b45309' : '#aaa' }}
+                >
+                  #{i + 1}
+                </div>
+                <div className="facility-rank-body">
+                  <div className="facility-rank-name-row">
+                    <span className="facility-rank-name">{f.name}</span>
+                    <span
+                      className="facility-rank-status"
+                      style={getFacilityStatusStyle(f.status)}
+                    >
+                      {f.status}
+                    </span>
+                  </div>
+                  <div className="facility-rank-meta">
+                    {f.auditsCount} audit{f.auditsCount !== 1 ? 's' : ''}
+                  </div>
+                  <div className="facility-rank-bar-wrapper">
+                    <div
+                      className="facility-rank-bar"
+                      style={{
+                        width: `${f.rate}%`,
+                        background: getRateColor(f.rate)
+                      }}
+                    />
+                  </div>
+                </div>
+                <div
+                  className="facility-rank-rate"
+                  style={{ color: getRateColor(f.rate) }}
+                >
+                  {f.rate}%
+                </div>
               </div>
             ))}
           </div>

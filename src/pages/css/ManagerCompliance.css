@@ -157,6 +157,84 @@
   text-align: right;
 }
 
+/* ================================
+   FACILITY RANKING
+   ================================ */
+
+.facility-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.facility-rank-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.facility-rank-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 24px;
+}
+
+.facility-rank-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.facility-rank-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.facility-rank-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.facility-rank-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.facility-rank-meta {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.facility-rank-bar-wrapper {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.facility-rank-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s ease;
+}
+
+.facility-rank-rate {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: right;
+}
+
 /* ── Tablet landscape ─────────────────────────────────────── */
 @media (max-width: 1200px) {
   .compliance-summary-grid { grid-template-columns: repeat(3, 1fr); }
