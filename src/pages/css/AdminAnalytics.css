@@ -1,0 +1,503 @@
+/* ================================
+   AdminAnalytics.css
+   ================================ */
+
+.aa-page {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.aa-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.aa-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #8B0000;
+  border-radius: 50%;
+  animation: aa-spin 0.7s linear infinite;
+}
+
+@keyframes aa-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Header ── */
+.aa-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.aa-subtitle {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* ── Tabs ── */
+.aa-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.aa-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.aa-tab:hover {
+  color: #8B0000;
+}
+
+.aa-tab--active {
+  color: #8B0000;
+  border-bottom-color: #8B0000;
+  font-weight: 600;
+}
+
+/* ── Content ── */
+.aa-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.aa-empty {
+  text-align: center;
+  font-size: 0.825rem;
+  color: #bbb;
+  padding: 2rem 0;
+}
+
+/* ── Summary cards ── */
+.aa-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.aa-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.1rem 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  border: 1px solid #f0f0f0;
+}
+
+.aa-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.2rem;
+}
+
+.aa-card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1;
+}
+
+.aa-card-value-sub {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #aaa;
+}
+
+.aa-card-label {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ── Two-column row ── */
+.aa-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ── Chart cards ── */
+.aa-chart-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.aa-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.aa-chart-header h6 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.aa-chart-sub {
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+/* ── Status bar list ── */
+.aa-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.aa-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aa-status-label {
+  font-size: 0.78rem;
+  color: #555;
+  min-width: 120px;
+}
+
+.aa-status-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.aa-status-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s ease;
+}
+
+.aa-status-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #333;
+  min-width: 24px;
+  text-align: right;
+}
+
+/* ── Maintenance cards ── */
+.aa-maintenance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.aa-maintenance-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.aa-maintenance-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.aa-maintenance-label {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ── Facility ranking (reuse from officer/manager) ── */
+.facility-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.facility-rank-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.facility-rank-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 24px;
+}
+
+.facility-rank-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.facility-rank-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.facility-rank-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.facility-rank-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.facility-rank-meta {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.facility-rank-bar-wrapper {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.facility-rank-bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s ease;
+}
+
+.facility-rank-rate {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── Performance cards ── */
+.aa-perf-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.aa-perf-card {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.aa-perf-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.aa-perf-label {
+  font-size: 0.775rem;
+  color: #555;
+  font-weight: 500;
+}
+
+/* ── Issues list ── */
+.aa-issues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aa-issue-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: #f9fafb;
+  border: 1px solid #f0f0f0;
+}
+
+.aa-issue-rank {
+  font-size: 11px;
+  font-weight: 700;
+  color: #aaa;
+  min-width: 24px;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.aa-issue-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.aa-issue-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #111827;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.aa-issue-section {
+  font-size: 10px;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+.aa-issue-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #b91c1c;
+  white-space: nowrap;
+  background: #fde8e8;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+/* ── Facilities with most issues ── */
+.aa-facility-issues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aa-facility-issue-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: #f9fafb;
+  border: 1px solid #f0f0f0;
+}
+
+.aa-facility-issue-rank {
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+.aa-facility-issue-name {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* ── Officer table ── */
+.aa-officer-table-wrap {
+  overflow-x: auto;
+}
+
+.aa-officer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.aa-officer-table th {
+  text-align: left;
+  padding: 7px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.aa-officer-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid #f8f8f8;
+  color: #333;
+}
+
+.aa-officer-table tr:last-child td {
+  border-bottom: none;
+}
+
+.aa-officer-rank {
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.aa-officer-name {
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .aa-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .aa-perf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .aa-row-2 {
+    grid-template-columns: 1fr;
+  }
+  .aa-maintenance-grid {
+    grid-template-columns: 1fr;
+  }
+  .aa-cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .aa-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .aa-perf-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
