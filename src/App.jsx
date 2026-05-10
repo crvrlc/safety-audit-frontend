@@ -34,7 +34,7 @@ import {AdminRecords, AdminMonitoring} from './pages/admin/AdminPlaceholders'
 import AdminActivity from './pages/admin/AdminActivity'
 import AdminFacilities from './pages/admin/FacilitiesPage'
 import AdminAuditRecords from './pages/admin/AdminAuditRecords'
-import AdminAnalytics  from './pages/admin/AdminPlaceholders'
+import AdminAnalytics  from './pages/admin/AdminAnalytics'
 
 // Manager Pages
 import ManagerDashboard from './pages/manager/ManagerDashboard'
