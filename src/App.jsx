@@ -30,10 +30,11 @@ import AdminUsers from './pages/admin/AdminUsers'
 import AdminChecklists from './pages/admin/AdminChecklists'
 import EditTemplate from './pages/admin/EditTemplate'
 import AddSection from './pages/admin/AddSection'
-import {AdminRecords, AdminAnalytics, AdminMonitoring} from './pages/admin/AdminPlaceholders'
+import {AdminRecords, AdminMonitoring} from './pages/admin/AdminPlaceholders'
 import AdminActivity from './pages/admin/AdminActivity'
 import AdminFacilities from './pages/admin/FacilitiesPage'
 import AdminAuditRecords from './pages/admin/AdminAuditRecords'
+import AdminAnalytics  from './pages/admin/AdminAnalytics'
 
 // Manager Pages
 import ManagerDashboard from './pages/manager/ManagerDashboard'
@@ -125,8 +126,6 @@ function App() {
             <Route path="facilities"                     element={<AdminFacilities />} />
             {/* <Route path="audit-records"                  element={<AdminAuditRecords />} /> */}
           </Route>
-
-
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/login" />} />
