@@ -93,6 +93,10 @@
   gap: 1rem;
 }
 
+.aa-cards-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .aa-card {
   background: #fff;
   border-radius: 10px;

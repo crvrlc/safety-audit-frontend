@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getAllFindings, resolveFinding } from '../../services/findingService'
+import { getMyOfficerFindings, resolveFinding } from '../../services/findingService'
 import '../css/OfficerRecords.css'
 
 // AuditResponse doesn't have a severity field — resolution status is the main indicator
@@ -42,7 +42,7 @@ const OfficerFindingsRecords = () => {
 
   const fetchFindings = () => {
     setLoading(true)
-    getAllFindings()
+    getMyOfficerFindings()
       .then(res => setFindings(res.data))
       .finally(() => setLoading(false))
   }

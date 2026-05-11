@@ -36,10 +36,11 @@ const navItems = {
 
   admin: [
     { path: '/admin/dashboard',  icon: FiHome,        label: 'Dashboard' },
+    { path: '/admin/records',    icon: FiFolder,      label: 'Audit Records' },
+    { path: '/admin/findings',   icon: FiClipboard,   label: 'Findings' }, 
     { path: '/admin/users',      icon: FiUsers,       label: 'Manage Users' },
     { path: '/admin/facilities', icon: FiMonitor,     label: 'Manage Facilities' },
     { path: '/admin/checklists', icon: FiCheckSquare, label: 'Checklist Templates' },
-    { path: '/admin/records',    icon: FiFolder,      label: 'Audit Records' },
     { path: '/admin/analytics',  icon: FiBarChart2,   label: 'Analytics' },
     // { path: '/admin/monitoring', icon: FiMonitor,     label: 'System Monitoring' },
   ]
