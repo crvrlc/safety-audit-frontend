@@ -185,7 +185,11 @@
   border-bottom: none;
 }
 
-.af-table tr:hover td {
+.af-row--clickable {
+  cursor: pointer;
+}
+
+.af-row--clickable:hover td {
   background: #fafafa;
 }
 
@@ -199,12 +203,14 @@
 
 /* ── Cell styles ── */
 .af-code {
-  font-family: monospace;
-  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: #8B0000;
-  background: #fdf2f2;
-  padding: 2px 6px;
+  background: #fff5f5;
+  padding: 3px 7px;
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .af-office-cell {
@@ -213,13 +219,13 @@
   gap: 1px;
 }
 
-.af-facility {
+.af-office {
   font-weight: 600;
   color: #1a1a2e;
   font-size: 0.8rem;
 }
 
-.af-office {
+.af-facility {
   font-size: 0.72rem;
   color: #888;
 }
@@ -230,17 +236,8 @@
   white-space: nowrap;
 }
 
-.af-section {
-  font-size: 0.78rem;
-  color: #555;
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .af-truncate {
-  max-width: 160px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -256,9 +253,23 @@
   white-space: nowrap;
 }
 
+.af-assigned-text {
+  font-size: 0.78rem;
+  color: #333;
+}
+
+.af-unassigned {
+  color: #ccc;
+  font-size: 0.78rem;
+}
+
 .af-overdue-date {
   color: #b91c1c;
   font-weight: 600;
+}
+
+.af-overdue-tag {
+  font-size: 0.7rem;
 }
 
 .af-empty-row {
@@ -328,6 +339,153 @@
   padding: 0 4px;
 }
 
+/* ── Modal ── */
+.af-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.af-modal {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.af-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.af-modal-code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8B0000;
+  background: #fff5f5;
+  padding: 3px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.af-overdue-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.af-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.af-modal-close:hover {
+  background: #f3f4f6;
+  color: #333;
+}
+
+.af-modal-body {
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.af-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.af-modal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.af-modal-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.af-modal-value {
+  font-size: 0.825rem;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+
+.af-modal-box {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #f0f0f0;
+}
+
+.af-modal-box--resolved {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.af-modal-box-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.af-modal-box-text {
+  font-size: 0.825rem;
+  color: #333;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.af-evidence-thumb {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 6px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.af-modal-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .af-cards-grid {
@@ -344,5 +502,8 @@
   }
   .af-search-wrap {
     width: 100%;
+  }
+  .af-modal-grid {
+    grid-template-columns: 1fr;
   }
 }
