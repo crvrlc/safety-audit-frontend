@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import api from '../../services/api'
-import { FiSearch, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi'
+import { FiSearch, FiChevronLeft, FiChevronRight, FiX, FiEye } from 'react-icons/fi'
 import '../css/AdminFindings.css'
 
 const PAGE_SIZE = 15
@@ -52,9 +52,15 @@ const isOverdue = (f) =>
 // ── Finding Detail Modal ──────────────────────────────────────────
 const FindingModal = ({ finding, onClose }) => {
   if (!finding) return null
+
+  const evidenceList = finding.evidence ?? []
+  const hasEvidence  = evidenceList.length > 0 || finding.resolutionEvidence
+
   return (
     <div className="af-modal-overlay" onClick={onClose}>
       <div className="af-modal" onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
         <div className="af-modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <code className="af-modal-code">{finding.audit?.inspectionCode ?? '—'}</code>
@@ -63,7 +69,10 @@ const FindingModal = ({ finding, onClose }) => {
           <button className="af-modal-close" onClick={onClose}><FiX size={18} /></button>
         </div>
 
+        {/* Body */}
         <div className="af-modal-body">
+
+          {/* Meta grid */}
           <div className="af-modal-grid">
             <div className="af-modal-item">
               <span className="af-modal-label">Office</span>
@@ -105,7 +114,8 @@ const FindingModal = ({ finding, onClose }) => {
             )}
             <div className="af-modal-item">
               <span className="af-modal-label">Due Date</span>
-              <span className="af-modal-value" style={{ color: isOverdue(finding) ? '#b91c1c' : 'inherit', fontWeight: isOverdue(finding) ? 600 : 400 }}>
+              <span className="af-modal-value"
+                style={{ color: isOverdue(finding) ? '#b91c1c' : 'inherit', fontWeight: isOverdue(finding) ? 600 : 400 }}>
                 {formatDate(finding.dueDate)}{isOverdue(finding) ? ' (Overdue)' : ''}
               </span>
             </div>
@@ -117,6 +127,7 @@ const FindingModal = ({ finding, onClose }) => {
             )}
           </div>
 
+          {/* Checklist item */}
           {finding.checklistItem?.statement && (
             <div className="af-modal-box">
               <div className="af-modal-box-label">Checklist Item</div>
@@ -124,16 +135,43 @@ const FindingModal = ({ finding, onClose }) => {
             </div>
           )}
 
+          {/* Finding */}
           <div className="af-modal-box">
             <div className="af-modal-box-label">🔍 Finding</div>
             <div className="af-modal-box-text">{finding.finding || '—'}</div>
           </div>
 
+          {/* Corrective Action */}
           <div className="af-modal-box">
             <div className="af-modal-box-label">📝 Recommended Corrective Action</div>
             <div className="af-modal-box-text">{finding.correctiveAction || '—'}</div>
           </div>
 
+          {/* Officer-uploaded evidence photos */}
+          {evidenceList.length > 0 && (
+            <div className="af-modal-box">
+              <div className="af-modal-box-label">📸 Inspection Evidence</div>
+              <div className="af-evidence-grid">
+                {evidenceList.map((ev, i) => (
+                  ev.fileUrl?.match(/\.(jpg|jpeg|png|gif|webp)/i) ? (
+                    <img
+                      key={i}
+                      src={ev.fileUrl}
+                      alt={`evidence-${i}`}
+                      className="af-evidence-thumb"
+                      onClick={() => window.open(ev.fileUrl, '_blank')}
+                    />
+                  ) : (
+                    <a key={i} href={ev.fileUrl} target="_blank" rel="noreferrer" className="af-evidence-file">
+                      📄 File {i + 1}
+                    </a>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Resolution note */}
           {finding.resolutionNote && (
             <div className="af-modal-box af-modal-box--resolved">
               <div className="af-modal-box-label">✅ Resolution Note</div>
@@ -141,28 +179,34 @@ const FindingModal = ({ finding, onClose }) => {
             </div>
           )}
 
+          {/* Resolution evidence */}
           {finding.resolutionEvidence && (
-            <div className="af-modal-box">
+            <div className="af-modal-box af-modal-box--resolved">
               <div className="af-modal-box-label">📎 Resolution Evidence</div>
               <div className="af-modal-box-text">
                 {finding.resolutionEvidence.match(/\.(jpg|jpeg|png|gif|webp)/i) ? (
                   <img
                     src={finding.resolutionEvidence}
-                    alt="evidence"
+                    alt="resolution evidence"
                     className="af-evidence-thumb"
                     onClick={() => window.open(finding.resolutionEvidence, '_blank')}
                   />
                 ) : (
-                  <a href={finding.resolutionEvidence} target="_blank" rel="noreferrer">View File</a>
+                  <a href={finding.resolutionEvidence} target="_blank" rel="noreferrer" className="af-evidence-file">
+                    📄 View File
+                  </a>
                 )}
               </div>
             </div>
           )}
+
         </div>
 
+        {/* Footer */}
         <div className="af-modal-footer">
           <button className="btn-secondary" onClick={onClose}>Close</button>
         </div>
+
       </div>
     </div>
   )
@@ -174,12 +218,13 @@ const AdminFindings = () => {
   const [loading,         setLoading]         = useState(true)
   const [selectedFinding, setSelectedFinding] = useState(null)
 
-  const [search,         setSearch]         = useState('')
-  const [statusFilter,   setStatusFilter]   = useState('')
-  const [overdueFilter,  setOverdueFilter]  = useState(false)
-  const [facilityFilter, setFacilityFilter] = useState('')
-  const [sectionFilter,  setSectionFilter]  = useState('')
-  const [page,           setPage]           = useState(1)
+  const [search,          setSearch]          = useState('')
+  const [statusFilter,    setStatusFilter]    = useState('')
+  const [severityFilter,  setSeverityFilter]  = useState('')
+  const [overdueFilter,   setOverdueFilter]   = useState(false)
+  const [facilityFilter,  setFacilityFilter]  = useState('')
+  const [sectionFilter,   setSectionFilter]   = useState('')
+  const [page,            setPage]            = useState(1)
 
   useEffect(() => {
     api.get('/findings')
@@ -217,24 +262,27 @@ const AdminFindings = () => {
         f.audit?.inspector?.name?.toLowerCase().includes(q) ||
         f.audit?.office?.facility?.name?.toLowerCase().includes(q)
       const matchStatus   = !statusFilter   || f.resolutionStatus === statusFilter
+      const matchSeverity = !severityFilter || f.severity === severityFilter
       const matchOverdue  = !overdueFilter  || isOverdue(f)
       const matchFacility = !facilityFilter || f.audit?.office?.facility?.name === facilityFilter
       const matchSection  = !sectionFilter  || f.checklistItem?.section?.name === sectionFilter
-      return matchSearch && matchStatus && matchOverdue && matchFacility && matchSection
+      return matchSearch && matchStatus && matchSeverity && matchOverdue && matchFacility && matchSection
     })
-  }, [findings, search, statusFilter, overdueFilter, facilityFilter, sectionFilter])
+  }, [findings, search, statusFilter, severityFilter, overdueFilter, facilityFilter, sectionFilter])
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const paginated  = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  useEffect(() => { setPage(1) }, [search, statusFilter, overdueFilter, facilityFilter, sectionFilter])
+  useEffect(() => {
+    setPage(1)
+  }, [search, statusFilter, severityFilter, overdueFilter, facilityFilter, sectionFilter])
 
   const clearFilters = () => {
-    setSearch(''); setStatusFilter(''); setOverdueFilter(false)
-    setFacilityFilter(''); setSectionFilter('')
+    setSearch(''); setStatusFilter(''); setSeverityFilter('')
+    setOverdueFilter(false); setFacilityFilter(''); setSectionFilter('')
   }
 
-  const hasFilters = search || statusFilter || overdueFilter || facilityFilter || sectionFilter
+  const hasFilters = search || statusFilter || severityFilter || overdueFilter || facilityFilter || sectionFilter
 
   const handleCardClick = (key) => {
     if (key === 'total')   { clearFilters(); return }
@@ -250,6 +298,7 @@ const AdminFindings = () => {
   return (
     <div className="af-page">
 
+      {/* Header */}
       <div className="af-header">
         <div>
           <h4 className="page-title">Findings and Corrective Actions</h4>
@@ -290,6 +339,7 @@ const AdminFindings = () => {
             value={search} onChange={e => setSearch(e.target.value)}
           />
         </div>
+
         <select className="af-select" value={statusFilter}
           onChange={e => { setStatusFilter(e.target.value); setOverdueFilter(false) }}>
           <option value="">All Statuses</option>
@@ -297,14 +347,24 @@ const AdminFindings = () => {
           <option value="assigned">Assigned</option>
           <option value="resolved">Resolved</option>
         </select>
+
+        <select className="af-select" value={severityFilter} onChange={e => setSeverityFilter(e.target.value)}>
+          <option value="">All Severity</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+
         <select className="af-select" value={facilityFilter} onChange={e => setFacilityFilter(e.target.value)}>
           <option value="">All Facilities</option>
           {facilities.map(f => <option key={f} value={f}>{f}</option>)}
         </select>
+
         <select className="af-select" value={sectionFilter} onChange={e => setSectionFilter(e.target.value)}>
           <option value="">All Sections</option>
           {sections.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
+
         {hasFilters && <button className="btn-secondary" onClick={clearFilters}>Clear</button>}
       </div>
 
@@ -326,20 +386,20 @@ const AdminFindings = () => {
               <th>Assigned To</th>
               <th>Status</th>
               <th>Due Date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {paginated.length === 0 ? (
               <tr>
-                <td colSpan={8} className="af-empty-row">
+                <td colSpan={9} className="af-empty-row">
                   {hasFilters ? 'No findings match your filters.' : 'No findings recorded yet.'}
                 </td>
               </tr>
             ) : paginated.map(f => (
               <tr
                 key={f.id}
-                className={`af-row--clickable ${isOverdue(f) ? 'af-row--overdue' : ''}`}
-                onClick={() => setSelectedFinding(f)}
+                className={isOverdue(f) ? 'af-row--overdue' : ''}
               >
                 <td><code className="af-code">{f.audit?.inspectionCode ?? '—'}</code></td>
                 <td>
@@ -368,6 +428,15 @@ const AdminFindings = () => {
                 <td className={isOverdue(f) ? 'af-overdue-date' : ''}>
                   {formatDate(f.dueDate)}
                   {isOverdue(f) && <span className="af-overdue-tag"> ⚠</span>}
+                </td>
+                <td>
+                  <button
+                    className="af-view-btn"
+                    onClick={() => setSelectedFinding(f)}
+                  >
+                    <FiEye size={13} style={{ marginRight: 4 }} />
+                    View
+                  </button>
                 </td>
               </tr>
             ))}
