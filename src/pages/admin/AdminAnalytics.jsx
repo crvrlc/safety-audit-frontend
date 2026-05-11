@@ -210,7 +210,10 @@ const AdminAnalytics = () => {
                     <XAxis type="number" unit="%" tick={{ fontSize: 11 }} domain={[0, 100]} />
                     <YAxis
                       type="category" dataKey="name"
-                      tick={{ fontSize: 11 }} width={130}
+                      tick={{ fontSize: 11 }} width={150}
+                      tickFormatter={(value) =>
+                        value.length > 25 ? value.slice(0, 25) + '…' : value
+                      }
                     />
                     <Tooltip formatter={(v) => `${v}%`} />
                     <Bar dataKey="rate" name="Compliance Rate" radius={[0, 4, 4, 0]}>
@@ -268,7 +271,7 @@ const AdminAnalytics = () => {
         <div className="aa-content">
 
           {/* Summary cards */}
-          <div className="aa-cards-grid">
+          <div className="aa-cards-grid aa-cards-grid--3">
             <div className="aa-card" style={{ borderBottom: '3px solid #2e7d32' }}>
               <div className="aa-card-icon" style={{ color: '#2e7d32', background: '#e8f5e9' }}>
                 <FiCheckCircle size={18} />
@@ -300,7 +303,6 @@ const AdminAnalytics = () => {
               <div className="aa-card-value">
                 {maintenanceStatus.completed + maintenanceStatus.waiting + maintenanceStatus.overdue}
               </div>
-              <div className="aa-card-label">Total Maintenance Tasks</div>
             </div>
           </div>
 

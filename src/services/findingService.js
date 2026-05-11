@@ -1,7 +1,8 @@
 import api from './api'
 
 export const getAllFindings       = ()         => api.get('/findings')
-export const getMyFindings       = ()         => api.get('/findings/my')
+export const getManagerFindings  = ()         => api.get('/findings/my')
+export const getMyOfficerFindings = () => api.get('/findings/officer-findings')
 export const getFindingById      = (id)       => api.get(`/findings/${id}`)
 export const getFindingsByAudit  = (auditId)  => api.get(`/audits/${auditId}/findings`)
 export const assignFinding       = (id, data) => api.patch(`/findings/${id}/assign`, data)

@@ -35,6 +35,7 @@ import AdminActivity from './pages/admin/AdminActivity'
 import AdminFacilities from './pages/admin/FacilitiesPage'
 import AdminAuditRecords from './pages/admin/AdminAuditRecords'
 import AdminAnalytics  from './pages/admin/AdminAnalytics'
+import AdminFindings from './pages/admin/AdminFindings'
 
 // Manager Pages
 import ManagerDashboard from './pages/manager/ManagerDashboard'
@@ -124,6 +125,7 @@ function App() {
             <Route path="monitoring"                     element={<AdminMonitoring />} />
             <Route path="activity"                       element={<AdminActivity />} />
             <Route path="facilities"                     element={<AdminFacilities />} />
+            <Route path="findings"                       element={<AdminFindings />} />
             {/* <Route path="audit-records"                  element={<AdminAuditRecords />} /> */}
           </Route>
 
