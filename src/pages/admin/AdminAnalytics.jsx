@@ -295,15 +295,6 @@ const AdminAnalytics = () => {
               <div className="aa-card-value">{facilitiesCritical}</div>
               <div className="aa-card-label">Facilities with Critical Issues</div>
             </div>
-
-            <div className="aa-card" style={{ borderBottom: '3px solid #6a1b9a' }}>
-              <div className="aa-card-icon" style={{ color: '#6a1b9a', background: '#f3e8fd' }}>
-                <FiTool size={18} />
-              </div>
-              <div className="aa-card-value">
-                {maintenanceStatus.completed + maintenanceStatus.waiting + maintenanceStatus.overdue}
-              </div>
-            </div>
           </div>
 
           {/* Corrective action trend + Safety overview donut */}
@@ -353,7 +344,7 @@ const AdminAnalytics = () => {
             </div>
           </div>
 
-          {/* Maintenance task status */}
+          {/* Maintenance task status
           <div className="aa-chart-card">
             <div className="aa-chart-header">
               <h6>Maintenance Task Status</h6>
@@ -371,7 +362,7 @@ const AdminAnalytics = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Facility compliance ranking */}
           <div className="aa-chart-card">
