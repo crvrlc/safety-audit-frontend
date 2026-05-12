@@ -446,17 +446,36 @@ export const generateResolutionReport = (audit) => {
                   <p>${formatDateTime(r.resolvedAt)}</p>
                 </div>
               </div>
+              ${r.evidence?.length > 0 ? `
+              <div style="margin-top: 8px;">
+                <label style="font-size:9px; text-transform:uppercase; color:#888; display:block; margin-bottom:4px;">
+                  📸 Inspection Evidence
+                </label>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  ${r.evidence.map(ev =>
+                    ev.fileUrl?.match(/\.(jpg|jpeg|png|gif|webp)/i)
+                      ? `<img src="${ev.fileUrl}" alt="evidence" style="width:160px; height:110px; object-fit:cover; border-radius:4px; border:1px solid #e0e0e0;" />`
+                      : `<a href="${ev.fileUrl}" target="_blank" style="font-size:10px;">📄 File</a>`
+                  ).join('')}
+                </div>
+              </div>
+            ` : ''}
               <div class="resolution-box">
-                <label>✅ Actions Taken</label>
-                <p>${r.resolutionNote || '—'}</p>
-                ${r.resolutionEvidence ? `
+              <label>✅ Actions Taken</label>
+              <p>${r.resolutionNote || '—'}</p>
+              ${r.resolutionEvidence ? `
+                <div style="margin-top:8px;">
+                  <label style="font-size:9px; text-transform:uppercase; color:#2e7d32; display:block; margin-bottom:4px;">
+                    📎 Resolution Evidence
+                  </label>
                   <img
                     src="${r.resolutionEvidence}"
                     alt="Resolution evidence"
-                    class="evidence-img"
+                    style="width:200px; height:140px; object-fit:cover; border-radius:4px; cursor:pointer;"
                   />
-                ` : ''}
-              </div>
+                </div>
+              ` : ''}
+            </div>
             </div>
           `
         }).join('')}
