@@ -18,6 +18,7 @@ const fmtDate = (d) => {
 const ManagerRecords = () => {
   const { user }    = useAuth()
   const [audits,    setAudits]    = useState([])
+  const [resolvedCount,   setResolvedCount]   = useState(0) 
   const [loading,   setLoading]   = useState(true)
   const [search,    setSearch]    = useState('')
   const [facilityFilter, setFacilityFilter] = useState('')
@@ -26,8 +27,14 @@ const ManagerRecords = () => {
 
   useEffect(() => {
     if (!user?.token) return
-    api.get('/manager/audits?status=completed')
-      .then(res => setAudits(res.data))
+    Promise.all([
+      api.get('/manager/audits?status=completed'),
+      api.get('/manager/findings?status=resolved'),  
+    ])
+      .then(([aRes, fRes]) => {
+        setAudits(aRes.data)
+        setResolvedCount(fRes.data.length)  //  count all resolved findings
+      })
       .catch(err => console.error(err))
       .finally(() => setLoading(false))
   }, [user])
@@ -151,8 +158,11 @@ const ManagerRecords = () => {
           <div className="rsc-icon" style={{ color: '#2e7d32' }}>
             <FiCheckCircle size={20} />
           </div>
-          <div className="rsc-value" style={{ color: '#2e7d32' }}>{summaryStats.totalResolved}</div>
+          <div className="rsc-value" style={{ color: '#2e7d32' }}>{resolvedCount}</div>
           <div className="rsc-label">Total Findings Resolved</div>
+          <div style={{ fontSize: '0.7rem', color: '#aaa', marginTop: 2 }}>
+            across all audits
+          </div>
         </div>
       </div>
 
