@@ -12,7 +12,7 @@ const AuthCallback = () => {
     if (token && role) {
       try {
         const payload = JSON.parse(atob(token.split('.')[1]))
-        login(token, role, payload.name)
+        login(token, role, payload.name, payload.email, payload.avatarUrl)
 
         const roleRoutes = {
           safety_officer:   '/officer/dashboard',

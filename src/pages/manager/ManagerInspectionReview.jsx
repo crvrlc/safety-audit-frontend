@@ -10,11 +10,12 @@ const ManagerInspectionReview = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const [audit, setAudit]           = useState(null)
-  const [loading, setLoading]       = useState(true)
-  const [confirmed, setConfirmed]   = useState(false)
+  const [audit,        setAudit]        = useState(null)
+  const [loading,      setLoading]      = useState(true)
+  const [confirmed,    setConfirmed]    = useState(false)
   const [acknowledging, setAcknowledging] = useState(false)
-  const [completing, setCompleting] = useState(false)
+  const [completing,   setCompleting]   = useState(false)
+  const [lightboxUrl,  setLightboxUrl]  = useState(null)
 
   useEffect(() => {
     getAuditById(id)
@@ -33,7 +34,15 @@ const ManagerInspectionReview = () => {
     ? Math.round((yesCount / applicable) * 100) : 0
 
   const findingsWithContent = responses.filter(
-    r => r.answer === 'no' && (r.finding?.trim() || r.correctiveAction?.trim())
+    r => r.answer === 'no' && (
+      r.finding?.trim() ||
+      r.correctiveAction?.trim() ||
+      r.evidence?.length > 0
+    )
+  )
+
+  const remarksWithContent = responses.filter(
+    r => (r.answer === 'yes' || r.answer === 'na') && r.remarks?.trim()
   )
 
   const getComplianceClass = (rate) => {
@@ -50,14 +59,15 @@ const ManagerInspectionReview = () => {
 
   const getSectionStats = (section) => {
     const ids = section.items.map(i => i.id)
-    const applicable = responses.filter(
-      r => ids.includes(r.checklistItemId) && r.answer !== 'na'
-    )
-    if (applicable.length === 0) return null
+    const sectionResponses = responses.filter(r => ids.includes(r.checklistItemId))
+    if (sectionResponses.length === 0) return null
+    const na         = sectionResponses.filter(r => r.answer === 'na').length
+    const applicable = sectionResponses.filter(r => r.answer !== 'na')
+    if (applicable.length === 0) return { yes: 0, no: 0, na, rate: 0 }
     const yes  = applicable.filter(r => r.answer === 'yes').length
     const no   = applicable.filter(r => r.answer === 'no').length
     const rate = Math.round((yes / applicable.length) * 100)
-    return { yes, no, rate }
+    return { yes, no, na, rate }
   }
 
   const formatDate = (d) => {
@@ -100,7 +110,7 @@ const ManagerInspectionReview = () => {
     </div>
   )
 
-  const status              = audit?.status
+  const status               = audit?.status
   const isAlreadyAcknowledged = !['submitted'].includes(status)
   const isPendingReview       = status === 'pending_review'
   const isCompleted           = status === 'completed'
@@ -114,7 +124,9 @@ const ManagerInspectionReview = () => {
           <h4>Inspection Report Review</h4>
           <p>
             {audit?.office?.facility?.name} — {audit?.office?.name} |{' '}
-            {audit?.inspectionCode}
+            <span style={{ color: '#8B0000', fontFamily: 'monospace' }}>
+              {audit?.inspectionCode}
+            </span>
           </p>
         </div>
         <button
@@ -131,7 +143,7 @@ const ManagerInspectionReview = () => {
       <div className="mir-card">
         <div className="mir-card-header"><h6>Inspection Summary</h6></div>
         <div className="mir-details-grid">
-          <div className="review-detail-item">
+          <div className="mir-detail-item">
             <label>Inspection Code</label>
             <p className="code">{audit?.inspectionCode}</p>
           </div>
@@ -145,7 +157,7 @@ const ManagerInspectionReview = () => {
             <label>Building / Facility</label>
             <p>{audit?.office?.facility?.name || '—'}</p>
           </div>
-          <div className="review-detail-item">
+          <div className="mir-detail-item">
             <label>Unit in Charge</label>
             <p>{audit?.office?.facility?.unitInCharge || '—'}</p>
           </div>
@@ -195,146 +207,160 @@ const ManagerInspectionReview = () => {
           <h3>{findingsWithContent.length}</h3>
           <p>Findings Noted</p>
         </div>
-        
       </div>
 
       {/* Section Breakdown */}
-      {/* <div className="mir-card">
-        <div className="mir-card-header"><h6>Section Compliance Breakdown</h6></div>
-        <div className="mir-card-body">
-          {sections.map(section => {
-            const stats = getSectionStats(section)
-            if (!stats) return null
-            const { yes, no, rate } = stats
-            const cls = getComplianceClass(rate)
-            return (
-              <div key={section.id} className="breakdown-row">
-                <span className="breakdown-label">{section.name}</span>
-                <div className="breakdown-bar">
-                  <div
-                    className={`breakdown-bar-fill ${cls}`}
-                    style={{ width: `${rate}%` }}
-                  />
-                </div>
-                <div className="breakdown-meta">
-                  <span className="breakdown-percent">{rate}%</span>
-                  <span className="breakdown-counts">
-                    <span className="yes-count">✓ {yes}</span>
-                    <span className="no-count">✗ {no}</span>
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div> */}
       <div className="breakdown-card">
-            <h6>Section Compliance Breakdown</h6>
-            <table className="breakdown-table">
+        <h6>Section Compliance Breakdown</h6>
+        <table className="breakdown-table">
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Yes</th>
+              <th>No</th>
+              <th>N/A</th>
+              <th>Rate</th>
+              <th>Compliance Level</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sections.map(section => {
+              const stats = getSectionStats(section)
+              if (!stats || (stats.yes === 0 && stats.no === 0)) return null
+              const { yes, no, na, rate } = stats
+              const cls = getComplianceClass(rate)
+              return (
+                <tr key={section.id}>
+                  <td className="breakdown-label">{section.name}</td>
+                  <td className="yes-count">✓ {yes}</td>
+                  <td className="no-count">✗ {no}</td>
+                  <td className="na-count">{na > 0 ? `${na}` : '—'}</td>
+                  <td className={`compliance-rate ${cls}`}>{rate}%</td>
+                  <td><span className={`compliance-badge ${cls}`}>{getComplianceLabel(rate)}</span></td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Findings Table */}
+      <div className="findings-table-card">
+        <div className="findings-table-card-header">
+          <h6>Findings & Corrective Actions Noted</h6>
+        </div>
+        {findingsWithContent.length === 0 ? (
+          <div className="no-findings">
+            <div className="no-findings-icon">✅</div>
+            <p>No findings — all items are compliant!</p>
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table className="findings-table">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Section</th>
-                  <th>Yes</th>
-                  <th>No</th>
-                  <th>N/A</th>
-                  <th>Rate</th>
-                  <th>Compliance Level</th>
+                  <th>Checklist Item</th>
+                  <th>Finding</th>
+                  <th>Corrective Action</th>
+                  <th>Severity</th>
+                  <th>Evidence</th>
                 </tr>
               </thead>
               <tbody>
-                {sections.map(section => {
-                  const stats = getSectionStats(section)
-                  if (!stats || (stats.yes === 0 && stats.no === 0)) return null
-                  const { yes, no, na, rate } = stats
-                  const cls = getComplianceClass(rate)
+                {findingsWithContent.map((r, index) => {
+                  const section = sections.find(s => s.items.some(i => i.id === r.checklistItemId))
+                  const item    = section?.items.find(i => i.id === r.checklistItemId)
                   return (
-                    <tr key={section.id}>
-                      <td className="breakdown-label">{section.name}</td>
-                      <td className="yes-count">✓ {yes}</td>
-                      <td className="no-count">✗ {no}</td>
-                      <td className="na-count">{na > 0 ? `${na}` : '—'}</td>
-                      <td className={`compliance-rate ${cls}`}>{rate}%</td>
-                      <td><span className={`compliance-badge ${cls}`}>{getComplianceLabel(rate)}</span></td>
+                    <tr key={r.id}>
+                      <td>{index + 1}</td>
+                      <td><small className="text-muted">{section?.name || '—'}</small></td>
+                      <td style={{ maxWidth: '180px' }}><small>{item?.statement || '—'}</small></td>
+                      <td style={{ maxWidth: '180px' }}>
+                        <small>{r.finding || <span className="text-muted">—</span>}</small>
+                      </td>
+                      <td style={{ maxWidth: '180px' }}>
+                        <small>{r.correctiveAction || <span className="text-muted">—</span>}</small>
+                      </td>
+                      <td>
+                        <span className={`severity-badge ${r.severity || 'medium'}`}>
+                          {r.severity || 'medium'}
+                        </span>
+                      </td>
+                      <td>
+                        {r.evidence?.length > 0 ? (
+                          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                            {r.evidence.map((ev, i) =>
+                              ev.fileType?.startsWith('image') || ev.fileUrl?.match(/\.(jpg|jpeg|png|gif|webp)/i) ? (
+                                <img
+                                  key={i}
+                                  src={ev.fileUrl}
+                                  alt={`evidence ${i + 1}`}
+                                  className="findings-evidence-thumb"
+                                  onClick={() => setLightboxUrl(ev.fileUrl)}
+                                  title="Click to view full size"
+                                />
+                              ) : (
+                                <a key={i} href={ev.fileUrl} target="_blank" rel="noreferrer" className="findings-evidence-file">
+                                  📄 File {i + 1}
+                                </a>
+                              )
+                            )}
+                          </div>
+                        ) : '—'}
+                      </td>
                     </tr>
                   )
                 })}
               </tbody>
             </table>
           </div>
+        )}
+      </div>
 
-
-      {/* Findings Summary */}
-            <div className="findings-table-card">
-              <div className="findings-table-card-header">
-                <h6>Findings & Corrective Actions Noted</h6>
-              </div>
-              {findingsWithContent.length === 0 ? (
-                <div className="no-findings">
-                  <div className="no-findings-icon">✅</div>
-                  <p>No findings — all items are compliant!</p>
-                </div>
-              ) : (
-                <div style={{ overflowX: 'auto' }}>
-                  <table className="findings-table">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Section</th>
-                        <th>Checklist Item</th>
-                        <th>Finding</th>
-                        <th>Corrective Action</th>
-                        <th>Severity</th>
-                        <th>Evidence</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {findingsWithContent.map((r, index) => {
-                        const section = sections.find(s => s.items.some(i => i.id === r.checklistItemId))
-                        const item = section?.items.find(i => i.id === r.checklistItemId)
-                        return (
-                          <tr key={r.id}>
-                            <td>{index + 1}</td>
-                            <td><small className="text-muted">{section?.name || '—'}</small></td>
-                            <td style={{ maxWidth: '180px' }}><small>{item?.statement || '—'}</small></td>
-                            <td style={{ maxWidth: '180px' }}>
-                              <small>{r.finding || <span className="text-muted">—</span>}</small>
-                            </td>
-                            <td style={{ maxWidth: '180px' }}>
-                              <small>{r.correctiveAction || <span className="text-muted">—</span>}</small>
-                            </td>
-                            <td>
-                              <span className={`severity-badge ${r.severity || 'medium'}`}>
-                                {r.severity || 'medium'}
-                              </span>
-                            </td>
-                            <td>
-                              {r.evidence?.map((ev, i) =>
-                                ev.fileType?.startsWith('image') ? (
-                                  <img
-                                    key={i}
-                                    src={ev.fileUrl}
-                                    alt={`evidence ${i + 1}`}
-                                    className="findings-evidence-thumb"
-                                    onClick={() => window.open(ev.fileUrl, '_blank')}
-                                    title="Click to view full size"
-                                  />
-                                ) : (
-                                  <a key={i} href={ev.fileUrl} target="_blank" rel="noreferrer" className="findings-evidence-file">
-                                    📄 File {i + 1}
-                                  </a>
-                                )
-                              )}
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-
-      {/* ── BOTTOM ACTIONS ── */}
+      {/* Remarks Table */}
+      {remarksWithContent.length > 0 && (
+        <div className="findings-table-card">
+          <div className="findings-table-card-header">
+            <h6>Remarks</h6>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table className="findings-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Section</th>
+                  <th>Checklist Item</th>
+                  <th>Answer</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {remarksWithContent.map((r, index) => {
+                  const section = sections.find(s => s.items.some(i => i.id === r.checklistItemId))
+                  const item    = section?.items.find(i => i.id === r.checklistItemId)
+                  return (
+                    <tr key={r.id}>
+                      <td>{index + 1}</td>
+                      <td><small className="text-muted">{section?.name || '—'}</small></td>
+                      <td style={{ maxWidth: '180px' }}><small>{item?.statement || '—'}</small></td>
+                      <td>
+                        <span className={`severity-badge ${r.answer === 'yes' ? 'low' : 'na'}`}>
+                          {r.answer === 'yes' ? 'Yes' : 'N/A'}
+                        </span>
+                      </td>
+                      <td style={{ maxWidth: '220px' }}>
+                        <small>{r.remarks}</small>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Case 1: Awaiting acknowledgement */}
       {!isAlreadyAcknowledged && (
@@ -349,8 +375,7 @@ const ManagerInspectionReview = () => {
             <label htmlFor="confirm">
               I hereby confirm that I have reviewed inspection report{' '}
               <strong>{audit?.inspectionCode}</strong> and acknowledge the safety
-              issues identified. Corrective actions will be addressed through the
-              Audit Findings module.
+              issues identified. Corrective actions will be assigned and addressed accordingly.
             </label>
           </div>
           <div className="mir-actions">
@@ -374,8 +399,8 @@ const ManagerInspectionReview = () => {
       {/* Case 2: All findings resolved — ready to close out */}
       {isPendingReview && (
         <>
-          <div className="mir-confirmation">
-            <p className="text-success mb-0">
+          <div className="mir-confirmation success">
+            <p>
               ✅ All corrective actions have been resolved. You may now mark this inspection as complete.
             </p>
           </div>
@@ -415,6 +440,33 @@ const ManagerInspectionReview = () => {
               ✅ Acknowledged on {formatDate(audit?.acknowledgedAt)}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Lightbox */}
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
         </div>
       )}
 

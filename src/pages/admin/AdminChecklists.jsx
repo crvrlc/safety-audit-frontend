@@ -15,6 +15,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import axios from 'axios'
 import '../css/AdminChecklists.css'
+import '../css/FacilitiesPage.css'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5001'
 
@@ -88,20 +89,20 @@ const AdminChecklists = () => {
     }
   }
   return (
-    <div className="admin-checklists">
+    <div className="facilities-page">
 
-      <div className="page-header">
-        <h2 className="page-title">Checklist Templates</h2>
-
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button
-            className="btn-primary"
-            onClick={() => navigate('/admin/checklists/new-section')}
-          >
-            + Add New Section
-          </button>
-
+      {/* Page header */}
+      <div className="facilities-header">
+        <div>
+          <h4 className="facilities-title">Checklist Templates</h4>
+          <p className="facilities-subtitle">Manage checklist sections and items</p>
         </div>
+          <button
+              className="btn-primary"
+              onClick={() => navigate('/admin/checklists/new-section')}
+            >
+              + Add New Section
+            </button>
       </div>
 
       {!template ? (
