@@ -165,7 +165,7 @@ const AssignModal = ({ finding, sections, onClose, onSaved }) => {
 }
 
 // ── Resolve Modal ─────────────────────────────────────────────────
-const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
+const ResolveModal = ({ finding, sections, audit, onClose, onSaved, onLightbox }) => {
   const [resolutionNote,     setResolutionNote]     = useState(finding?.resolutionNote || '')
   const [resolutionEvidence, setResolutionEvidence] = useState(finding?.resolutionEvidence || null)
   const [uploading,          setUploading]          = useState(false)
@@ -290,7 +290,7 @@ const ResolveModal = ({ finding, sections, audit, onClose, onSaved }) => {
                     src={resolutionEvidence}
                     alt="resolution evidence"
                     className="evidence-thumb-large"
-                    onClick={() => window.open(resolutionEvidence, '_blank')}
+                    onClick={() => onLightbox(resolutionEvidence)}
                   />
                 ) : (
                   <a href={resolutionEvidence} target="_blank" rel="noreferrer">
@@ -368,6 +368,8 @@ const ManagerFindings = () => {
   const [search,       setSearch]       = useState('')
   const [filterSev,    setFilterSev]    = useState('all')
   const [filterStatus, setFilterStatus] = useState('all')
+
+  const [lightboxUrl, setLightboxUrl] = useState(null)
 
   const fetchAll = useCallback(() => {
     setLoading(true)
@@ -768,7 +770,7 @@ const ManagerFindings = () => {
                               src={f.resolutionEvidence}
                               alt="evidence"
                               className="evidence-thumb"
-                              onClick={() => window.open(f.resolutionEvidence, '_blank')}
+                              onClick={() => setLightboxUrl(f.resolutionEvidence)}
                             />
                           ) : (
                             <a href={f.resolutionEvidence} target="_blank" rel="noreferrer">
@@ -811,7 +813,33 @@ const ManagerFindings = () => {
           audit={audits.find(a => a.id === resolveTarget?.auditId)}
           onClose={() => setResolveTarget(null)}
           onSaved={handleResolveSaved}
+          onLightbox={setLightboxUrl}
         />
+      )}
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
       )}
     </div>
   )
