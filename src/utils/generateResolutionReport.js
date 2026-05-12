@@ -454,7 +454,7 @@ export const generateResolutionReport = (audit) => {
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
                   ${r.evidence.map(ev =>
                     ev.fileUrl?.match(/\.(jpg|jpeg|png|gif|webp)/i)
-                      ? `<img src="${ev.fileUrl}" alt="evidence" style="width:160px; height:110px; object-fit:cover; border-radius:4px; border:1px solid #e0e0e0;" />`
+                      ? `<img src="${ev.fileUrl}" alt="evidence" style="width:120px; height:160px; object-fit:cover; border-radius:4px; border:1px solid #e0e0e0;" />`
                       : `<a href="${ev.fileUrl}" target="_blank" style="font-size:10px;">📄 File</a>`
                   ).join('')}
                 </div>
@@ -471,7 +471,7 @@ export const generateResolutionReport = (audit) => {
                   <img
                     src="${r.resolutionEvidence}"
                     alt="Resolution evidence"
-                    style="width:200px; height:140px; object-fit:cover; border-radius:4px; cursor:pointer;"
+                    style="width:120px; height:160px; object-fit:cover; border-radius:4px; cursor:pointer;"
                   />
                 </div>
               ` : ''}
