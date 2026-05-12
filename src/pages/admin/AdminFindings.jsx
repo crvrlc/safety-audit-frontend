@@ -159,7 +159,7 @@ const FindingModal = ({ finding, onClose }) => {
                       src={ev.fileUrl}
                       alt={`evidence-${i}`}
                       className="af-evidence-thumb"
-                      onClick={() => window.open(ev.fileUrl, '_blank')}
+                      onClick={() => setLightboxUrl(ev.fileUrl)}
                     />
                   ) : (
                     <a key={i} href={ev.fileUrl} target="_blank" rel="noreferrer" className="af-evidence-file">
@@ -189,7 +189,7 @@ const FindingModal = ({ finding, onClose }) => {
                     src={finding.resolutionEvidence}
                     alt="resolution evidence"
                     className="af-evidence-thumb"
-                    onClick={() => window.open(finding.resolutionEvidence, '_blank')}
+                    onClick={() => setLightboxUrl(finding.resolutionEvidence)}
                   />
                 ) : (
                   <a href={finding.resolutionEvidence} target="_blank" rel="noreferrer" className="af-evidence-file">
@@ -225,6 +225,7 @@ const AdminFindings = () => {
   const [facilityFilter,  setFacilityFilter]  = useState('')
   const [sectionFilter,   setSectionFilter]   = useState('')
   const [page,            setPage]            = useState(1)
+  const [lightboxUrl, setLightboxUrl] = useState(null)
 
   useEffect(() => {
     api.get('/findings')
@@ -477,6 +478,32 @@ const AdminFindings = () => {
       {/* Modal */}
       {selectedFinding && (
         <FindingModal finding={selectedFinding} onClose={() => setSelectedFinding(null)} />
+      )}
+
+      {lightboxUrl && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, cursor: 'zoom-out'
+          }}
+          onClick={() => setLightboxUrl(null)}
+        >
+          <img
+            src={lightboxUrl}
+            alt="evidence"
+            style={{ maxWidth: '90vw', maxHeight: '90vh', borderRadius: 8, boxShadow: '0 4px 32px rgba(0,0,0,0.5)' }}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            style={{
+              position: 'absolute', top: 16, right: 24,
+              background: 'none', border: 'none',
+              color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
+            }}
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
       )}
 
     </div>
