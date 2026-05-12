@@ -204,25 +204,28 @@ const AdminAnalytics = () => {
               {sectionCompliance.length === 0 ? (
                 <p className="aa-empty">No section data yet.</p>
               ) : (
-                <ResponsiveContainer width="100%" height={220}>
-                  <BarChart data={sectionCompliance} layout="vertical" margin={{ left: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis type="number" unit="%" tick={{ fontSize: 11 }} domain={[0, 100]} />
-                    <YAxis
-                      type="category" dataKey="name"
-                      tick={{ fontSize: 11 }} width={150}
-                      tickFormatter={(value) =>
-                        value.length > 25 ? value.slice(0, 25) + '…' : value
-                      }
-                    />
-                    <Tooltip formatter={(v) => `${v}%`} />
-                    <Bar dataKey="rate" name="Compliance Rate" radius={[0, 4, 4, 0]}>
-                      {sectionCompliance.map((entry, i) => (
-                        <Cell key={i} fill={getRateColor(entry.rate)} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
+                  {sectionCompliance.map((s, i) => (
+                    <div key={i}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                        <span style={{ fontSize: '0.78rem', color: '#444' }} title={s.name}>
+                          {s.name.length > 40 ? s.name.slice(0, 40) + '…' : s.name}
+                        </span>
+                        <span style={{ fontSize: '0.78rem', fontWeight: 700, color: getRateColor(s.rate) }}>
+                          {s.rate}%
+                        </span>
+                      </div>
+                      <div style={{ height: 8, background: '#f0f0f0', borderRadius: 99, overflow: 'hidden' }}>
+                        <div style={{
+                          width: `${s.rate}%`, height: '100%',
+                          background: getRateColor(s.rate),
+                          borderRadius: 99,
+                          transition: 'width 0.8s ease'
+                        }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
 
