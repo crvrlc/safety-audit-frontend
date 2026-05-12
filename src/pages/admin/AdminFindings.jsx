@@ -50,7 +50,7 @@ const isOverdue = (f) =>
   new Date(f.dueDate) < new Date()
 
 // ── Finding Detail Modal ──────────────────────────────────────────
-const FindingModal = ({ finding, onClose }) => {
+const FindingModal = ({ finding, onClose, onLightbox }) => {
   if (!finding) return null
 
   const evidenceList = finding.evidence ?? []
@@ -159,7 +159,7 @@ const FindingModal = ({ finding, onClose }) => {
                       src={ev.fileUrl}
                       alt={`evidence-${i}`}
                       className="af-evidence-thumb"
-                      onClick={() => setLightboxUrl(ev.fileUrl)}
+                      onClick={() => onLightbox(ev.fileUrl)}
                     />
                   ) : (
                     <a key={i} href={ev.fileUrl} target="_blank" rel="noreferrer" className="af-evidence-file">
@@ -189,7 +189,7 @@ const FindingModal = ({ finding, onClose }) => {
                     src={finding.resolutionEvidence}
                     alt="resolution evidence"
                     className="af-evidence-thumb"
-                    onClick={() => setLightboxUrl(finding.resolutionEvidence)}
+                    onClick={() => onLightbox(finding.resolutionEvidence)}
                   />
                 ) : (
                   <a href={finding.resolutionEvidence} target="_blank" rel="noreferrer" className="af-evidence-file">
@@ -477,7 +477,7 @@ const AdminFindings = () => {
 
       {/* Modal */}
       {selectedFinding && (
-        <FindingModal finding={selectedFinding} onClose={() => setSelectedFinding(null)} />
+        <FindingModal finding={selectedFinding} onClose={() => setSelectedFinding(null)} onLightbox={setLightboxUrl} />
       )}
 
       {lightboxUrl && (
