@@ -122,7 +122,7 @@ const OfficerFindingsRecords = () => {
                   <th>Finding</th>
                   <th>Corrective Action</th>
                   <th>Status</th>
-                  <th>Resolved</th>
+                  {/* <th>Resolved</th> */}
                   <th></th>
                 </tr>
               </thead>
@@ -141,7 +141,7 @@ const OfficerFindingsRecords = () => {
                       </span>
                     </td>
                     <td>{formatDate(f.resolvedAt)}</td>
-                    <td>
+                    {/* <td>
                       {f.resolutionStatus !== 'resolved' ? (
                         <button
                           className="btn-table-action btn-resolve"
@@ -155,7 +155,7 @@ const OfficerFindingsRecords = () => {
                           Resolved
                         </button>
                       )}
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

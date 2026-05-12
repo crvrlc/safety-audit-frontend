@@ -449,7 +449,7 @@ const ManagerFindings = () => {
   <div
     className="findings-summary-card"
     style={{ borderBottom: '4px solid #e65100' }}
-    onClick={() => setTab('reports')}
+    onClick={() => { setTab('reports'); setFilterStatus('all') }}
   >
     <div className="fsc-icon" style={{ color: '#e65100' }}>
       <FiFileText size={18} />
@@ -463,7 +463,7 @@ const ManagerFindings = () => {
   <div
     className="findings-summary-card"
         style={{ borderBottom: '4px solid #1565c0' }}
-        onClick={() => setTab('findings')}
+        onClick={() => { setTab('findings'); setFilterStatus('pending') }}
       >
         <div className="fsc-icon" style={{ color: '#1565c0' }}>
           <FiSearch size={18} />
@@ -477,7 +477,7 @@ const ManagerFindings = () => {
       <div
         className="findings-summary-card"
         style={{ borderBottom: '4px solid #6a1b9a' }}
-        onClick={() => setTab('findings')}
+        onClick={() => { setTab('findings'); setFilterStatus('assigned') }}
       >
         <div className="fsc-icon" style={{ color: '#6a1b9a' }}>
           <FiTool size={18} />
@@ -491,7 +491,7 @@ const ManagerFindings = () => {
       <div
         className="findings-summary-card"
         style={{ borderBottom: '4px solid #2e7d32' }}
-        onClick={() => setTab('resolved')}
+        onClick={() => { setTab('resolved'); setFilterStatus('all') }}
       >
         <div className="fsc-icon" style={{ color: '#2e7d32' }}>
           <FiCheckCircle size={18} />
@@ -574,15 +574,19 @@ const ManagerFindings = () => {
                       <td>
                         <button
                           className="btn-primary btn-sm"
-                          onClick={() => {
-                            if (a.status === 'completed') {
-                              generateResolutionReport(a)  
+                          onClick={async () => {
+                            if (a.status === 'submitted') {
+                              navigate(`/manager/inspections/${a.id}/review`)  // needs acknowledgment action
+                            } else if (a.status === 'completed') {
+                              generateResolutionReport(a)  // straight to resolution PDF
                             } else {
-                              navigate(`/manager/inspections/${a.id}/review`)
+                              generateReport(a)  // straight to inspection PDF
                             }
                           }}
                         >
-                          {a.status === 'submitted' ? 'Review' : 'View Report'}
+                          {a.status === 'submitted'  ? 'Review' :
+                          a.status === 'completed'  ? 'Resolution Report' :
+                          'View Report'}
                         </button>
                       </td>
                     </tr>

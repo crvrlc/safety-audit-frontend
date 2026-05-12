@@ -109,7 +109,7 @@ const ManagerHome = () => {
   }
 
 const quickActions = [
-  { icon: FiPlus, label: 'Assign Maintenance Task', desc: 'Create corrective action', path: '/manager/findings?action=assign', color: '#6a1b9a' },
+  { icon: FiPlus, label: 'Assign Maintenance Task', desc: 'Create corrective action', path: '/manager/findings?tab=findings', color: '#6a1b9a' },
   { icon: FiFileText, label: 'Review Inspection Reports', desc: 'Acknowledge submitted reports', path: '/manager/findings?tab=reports', color: '#e65100' },
   { icon: FiSearch, label: 'View Audit Findings', desc: 'Open findings needing action', path: '/manager/findings', color: '#1565c0' },
   { icon: FiBarChart2, label: 'Condition Tracker', desc: 'Facility safety status', path: '/manager/compliance', color: '#2e7d32' },
@@ -240,7 +240,7 @@ const bottomMetrics = [
 
         {/* Recent Activity */}
         <div className="activity-card">
-          <h6>Recent Maintenance Activity</h6>
+          <h6>Recent Activity</h6>
           {recentActivity.length === 0 ? (
               <p style={{ fontSize: '0.825rem', color: '#aaa', textAlign: 'center', padding: '16px 0' }}>
                 No recent activity
@@ -274,7 +274,7 @@ const bottomMetrics = [
               </div>
             ))}
           <div className="view-all-row">
-            <span className="view-all-link" onClick={() => navigate('/manager/maintenance')}>
+            <span className="view-all-link" onClick={() => navigate('/manager/findings')}>
               View All →
             </span>
           </div>

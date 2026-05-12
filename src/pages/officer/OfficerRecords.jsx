@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMyAudits } from '../../services/auditService'
-import { getAllFindings } from '../../services/findingService'
+import { getMyOfficerFindings } from '../../services/findingService'
 import '../css/OfficerRecords.css'
 
 // An audit is "archived" if it is completed AND older than 6 months
@@ -36,7 +36,7 @@ const OfficerRecords = () => {
   const [loading,  setLoading]  = useState(true)
 
   useEffect(() => {
-    Promise.all([getMyAudits(), getAllFindings()])
+    Promise.all([getMyAudits(), getMyOfficerFindings()])
       .then(([auditsRes, findingsRes]) => {
         setAudits(auditsRes.data)
         setFindings(findingsRes.data)
@@ -74,15 +74,27 @@ const OfficerRecords = () => {
 
       {/* STATUS CARDS */}
       <div className="status-cards">
-        <div className="status-card" onClick={() => navigate('/officer/archived')}>
-          <div className="status-card-count">{archivedAudits.length}</div>
+        <div
+          className="status-card"
+          style={{ borderBottom: '4px solid #1565c0' }}
+          onClick={() => navigate('/officer/archived')}
+        >
+          <div className="status-card-count" style={{ color: '#1565c0' }}>
+            {archivedAudits.length}
+          </div>
           <div className="status-card-label">Archived Records</div>
           <div className="status-card-sub">Completed &gt; 6 months ago</div>
         </div>
 
-        <div className="status-card" onClick={() => navigate('/officer/findings')}>
-          <div className="status-card-count">{findings.length}</div>
-          <div className="status-card-label">Findings Noted</div>
+        <div
+          className="status-card"
+          style={{ borderBottom: '4px solid #8B0000' }}
+          onClick={() => navigate('/officer/findings')}
+        >
+          <div className="status-card-count" style={{ color: '#8B0000' }}>
+            {findings.length}
+          </div>
+          <div className="status-card-label">My Findings</div>
           <div className="status-card-sub">
             {findings.filter(f => f.resolutionStatus !== 'resolved').length} unresolved
           </div>
