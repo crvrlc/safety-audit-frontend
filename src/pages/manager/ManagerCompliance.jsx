@@ -14,6 +14,7 @@ import {
   FiTool,
   FiBarChart2
 } from 'react-icons/fi'
+import '../css/AdminAnalytics.css'
 
 
 
@@ -233,30 +234,28 @@ const ManagerCompliance = () => {
 
       </div>
 
-      {/* Recurring Issues */}
-      <div className="chart-card" style={{ marginTop: 20 }}>
-        <h6>Top Recurring Issues</h6>
-        {recurringIssues.length === 0 ? (
-          <p style={{ color: '#aaa', fontSize: '0.875rem', padding: '8px 0' }}>No data available.</p>
-        ) : (
-          <div className="recurring-list">
-            {recurringIssues.map((issue, i) => (
-              <div key={i} className="recurring-row">
-                <div className="recurring-rank">#{i + 1}</div>
-                <div className="recurring-body">
-                  <div className="recurring-label" title={issue.issue}>
-                    {issue.issue}
-                  </div>
-                  {issue.section && issue.section !== '—' && (
-                    <div className="recurring-section">{issue.section}</div>
-                  )}
-                </div>
-                <span className="recurring-count">{issue.count}x</span>
+    {/* Recurring Issues */}
+    <div className="chart-card" style={{ marginTop: 20 }}>
+      <h6>Top Recurring Issues</h6>
+      {recurringIssues.length === 0 ? (
+        <p style={{ color: '#aaa', fontSize: '0.875rem', padding: '8px 0' }}>No data available.</p>
+      ) : (
+        <div className="aa-issues-list">
+          {recurringIssues.map((issue, i) => (
+            <div key={i} className="aa-issue-row">
+              <div className="aa-issue-rank">#{i + 1}</div>
+              <div className="aa-issue-body">
+                <div className="aa-issue-text" title={issue.issue}>{issue.issue}</div>
+                {issue.section && issue.section !== '—' && (
+                  <div className="aa-issue-section">{issue.section}</div>
+                )}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <span className="aa-issue-count">{issue.count}x</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
 
       {/* Facility Ranking */}
       <div className="compliance-card" style={{ marginTop: 20 }}>

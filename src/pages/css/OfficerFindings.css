@@ -266,6 +266,7 @@
 .severity-badge.medium   { background-color: #fff3e0; color: #e65100; }
 .severity-badge.high     { background-color: #ffebee; color: #c62828; }
 .severity-badge.critical { background-color: #8B0000; color: #ffffff; }
+.severity-badge.na { background-color: #f3f4f6; color: #6b7280; }
 
 /* ── Severity Select ─────────────────────────────────── */
 .severity-select {
