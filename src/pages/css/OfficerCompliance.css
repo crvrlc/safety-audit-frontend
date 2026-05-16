@@ -85,7 +85,7 @@
 
 .recurring-row {
   display: flex;
-  align-items: flex-start; /* ← was center, this lets rows grow tall */
+  align-items: flex-start; 
   gap: 10px;
   padding: 8px 10px;
   border-radius: 7px;
@@ -108,14 +108,14 @@
 
 .recurring-body {
   flex: 1;
-  min-width: 0; /* ← was 300px, this is the key fix — allows flex child to shrink and wrap */
+  min-width: 0; 
 }
 
 .recurring-label {
   font-size: 0.8rem;
   font-weight: 500;
   color: #111827;
-  word-break: break-word; /* ← handles very long words without spaces */
+  word-break: break-word; 
   line-height: 1.4;
 }
 

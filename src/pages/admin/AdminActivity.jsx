@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import axios from 'axios'
-import '../css/AdminHome.css' // reuse your dashboard styles
+import '../css/AdminHome.css' 
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5001'
 

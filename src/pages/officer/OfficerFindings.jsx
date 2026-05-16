@@ -132,31 +132,6 @@ const OfficerFindings = () => {
     }
   }
   
-  // ── Save severity + exit to inspections list ───────────────────────────────────────
-  // const handleSaveAndExit = async () => {
-  //   setSaving(true)
-  //   try {
-  //     // Only thing editable on this page is severity
-  //     const payload = responses
-  //       .filter(r => r.answer === 'no')
-  //       .map(r => ({
-  //         checklistItemId: r.checklistItemId,
-  //         answer:          r.answer,
-  //         remarks:         r.remarks          || '',
-  //         finding:         r.finding          || '',
-  //         correctiveAction:r.correctiveAction || '',
-  //         isNASection:     r.isNASection      || false,
-  //         severity:        severityMap[r.id]  || r.severity || 'medium'
-  //       }))
-
-  //     await saveResponsesBulk(id, { responses: payload })
-  //     navigate('/officer/inspections')
-  //   } catch (err) {
-  //     console.error(err)
-  //   } finally {
-  //     setSaving(false)
-  //   }
-  // }
 
   const getStepStatus = (stepKey) => {
     if (['schedule', 'start', 'checklist'].includes(stepKey)) return 'completed'

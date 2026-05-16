@@ -359,7 +359,7 @@ const OfficerInspections = () => {
           </button>
           <button
             className="btn-action delete"
-            onClick={() => handleDelete(audit.id)}  // ✅ just call it directly
+            onClick={() => handleDelete(audit.id)}  
           >
             Delete
           </button>
