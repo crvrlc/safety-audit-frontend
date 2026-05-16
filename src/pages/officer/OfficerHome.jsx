@@ -110,7 +110,7 @@ const OfficerHome = () => {
     .slice(0, 3)
 
   // =========================
-  // 🔹 OVERVIEW
+  //  OVERVIEW
   // =========================
 
   const ongoingAudits = audits.filter(a => a.status === 'ongoing')
@@ -123,7 +123,7 @@ const OfficerHome = () => {
   const moreUpcomingCount = upcomingAudits.length - 1
 
   // =========================
-  // 🔹 METRICS
+  //  METRICS
   // =========================
 
   const thisMonthAudits = audits.filter(a => {
@@ -154,13 +154,13 @@ const OfficerHome = () => {
   })()
 
   // =========================
-  // 🔹 CHART DATA (real)
+  //  CHART DATA (real)
   // =========================
 
   const chartData = buildMonthlyChartData(audits)
 
   // =========================
-  // 🔹 HELPERS
+  //  HELPERS
   // =========================
 
   const formatDate = (date) => date.toLocaleDateString('en-PH', {
@@ -179,7 +179,7 @@ const OfficerHome = () => {
   }
 
   // =========================
-  // 🔹 METRIC CARDS
+  //  METRIC CARDS
   // =========================
 
   const metricCards = [
@@ -228,7 +228,7 @@ const OfficerHome = () => {
       </div>
 
       {/* =========================
-          🔴 TOP OVERVIEW CARDS
+          TOP OVERVIEW CARDS
       ========================= */}
       <div>
         <p className="section-label">Overview</p>
@@ -294,7 +294,7 @@ const OfficerHome = () => {
       </div>
 
       {/* =========================
-          🟡 METRICS
+           METRICS
       ========================= */}
       <div>
         <p className="section-label">Metrics</p>
@@ -330,7 +330,7 @@ const OfficerHome = () => {
       </div>
 
       {/* =========================
-          🔵 BOTTOM
+           BOTTOM
       ========================= */}
       <div>
         <p className="section-label">Activity</p>

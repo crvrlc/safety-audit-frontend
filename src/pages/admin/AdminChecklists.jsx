@@ -141,7 +141,7 @@ const AdminChecklists = () => {
   )
 }
 
-// 🔹 SORTABLE CARD
+// SORTABLE CARD
 const SortableSection = ({ section, onEdit, onDelete }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: section.id })
 

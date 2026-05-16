@@ -67,7 +67,7 @@ const OfficerChecklist = () => {
       )
       setCurrentSectionIndex(
         firstIncompleteIndex === -1
-          ? sections.length - 1  // all done, go to last section
+          ? sections.length - 1  
           : firstIncompleteIndex
       )
 
@@ -80,7 +80,7 @@ const OfficerChecklist = () => {
     timerRef.current = setInterval(() => {
       setTimer(t => {
         const next = t + 1
-        localStorage.setItem(`audit-timer-${id}`, next)  // ← save every tick
+        localStorage.setItem(`audit-timer-${id}`, next)  
         return next
       })
     }, 1000)

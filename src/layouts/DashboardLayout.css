@@ -145,16 +145,6 @@
 }
 
 /* ── Sidebar ─────────────────────────────────────────── */
-/* .dashboard-sidebar {
-  width: 240px;
-  min-width: 240px;
-  background-color: #1a1a2e;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 60px);
-  transition: all 0.3s ease;
-  overflow: hidden;
-} */
 
 .dashboard-sidebar {
   position: fixed;

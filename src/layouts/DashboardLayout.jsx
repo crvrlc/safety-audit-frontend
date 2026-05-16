@@ -131,13 +131,15 @@ const DashboardLayout = ({ children }) => {
                 <div className="user-dropdown-name">{user?.name}</div>
                 <div className="user-dropdown-role">{formatRole(user?.role)}</div>
               </div>
-              <button
-                className="user-dropdown-item"
-                onClick={() => { navigate(getSettingsPath()); setDropdownOpen(false) }}
-              >
-                <FiSettings size={16} />
-                Settings
-              </button>
+              {user?.role !== 'admin' && (
+                <button
+                  className="user-dropdown-item"
+                  onClick={() => { navigate(getSettingsPath()); setDropdownOpen(false) }}
+                >
+                  <FiSettings size={16} />
+                  Settings
+                </button>
+              )}
               <button
                 className="user-dropdown-item danger"
                 onClick={logout}

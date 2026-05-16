@@ -116,13 +116,6 @@ const AdminHome = () => {
       {/* Quick action cards */}
       <p className="section-label">Quick Actions</p>
       <div className="quick-cards-grid">
-        {/* {quickCards.map((c, i) => (
-          <div key={i} className="quick-card" onClick={() => navigate(c.path)}>
-            <div className="quick-card-icon">{c.icon}</div>
-            <div className="quick-card-title">{c.title}</div>
-            <div className="quick-card-desc">{c.desc}</div>
-          </div>
-        ))} */}
         {quickCards.map((card, i) => {
           const Icon = card.icon
 
